@@ -37,7 +37,7 @@ def key_of_id(id):
             key_of_song = key_of_song[0]
         return (key_of_song) , 200
     except:
-        return('error while getting key')
+        return('error while getting key'), 500
 
 def alldetails(id):
     try:
@@ -46,6 +46,7 @@ def alldetails(id):
         print(resultstr), 200
     except:
         return ('error while getting the details'), 500
+
 def tempo_of_id(id):
     try:
         result = sp.audio_features(str(id))

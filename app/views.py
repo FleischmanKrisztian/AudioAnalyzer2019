@@ -57,11 +57,12 @@ def about():
 @application.route("/profile/<name>")
 @login_required
 def profile(name):
-    return render_template("public/profile.html")
+    return render_template("public/profile.html", names=name)
 
-@application.route("/testreact")
-def testreact():
-    return render_template("public/reacttest.html")
+@application.route("/results/<audioname>")
+def results(audioname):
+    print(audioname)
+    return render_template("public/results.html", nameofsong = audioname)
 
 @application.route("/signout")
 @login_required
@@ -84,44 +85,40 @@ def login():
 @login_required
 def upload():
     if request.method == "POST":
-
         if 'audiofile' in request.files:
-
                 if not allowed_audio_filesize(request.cookies.get("filesize")):
                     print("File exceeded maximum size")
                     return render_template("public/upload.html")
                 else:
                     audiofile = Audiofile()
                     audiofile.convert_audiofile()
-                    id = spotifyapi.idOfSong(audiofile.name)
-                    if Filefound(id):
-                        tempo = (spotifyapi.tempo_of_id(id[0]))
-                        key = (spotifyapi.key_of_id(id[0]))
-                        audiofile.tempo = tempo[0]
-                        audiofile.key = key[0]
-                        print (str(audiofile.key) + " " + str(audiofile.tempo))
-
-                    t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
-                    t1.start()
-                    t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
-                    t2.start()
-                    t3 = threading.Thread(target=audiofile.channel_audiofile)
-                    t3.start()
-                    t1.join()
-                    t4 = threading.Thread(target=audiofile.librosa_spectrogram)
-                    t4.start()
-                    t4.join()
-                    t5 = threading.Thread(target=audiofile.tempo_graph)
-                    t5.start()
-                    t5.join()         
+                    # id = spotifyapi.idOfSong(audiofile.name)
+                    # if Filefound(id):
+                    #     tempo = (spotifyapi.tempo_of_id(id[0]))
+                    #     key = (spotifyapi.key_of_id(id[0]))
+                    #     audiofile.tempo = tempo[0]
+                    #     audiofile.key = key[0]
+                    #     print (str(audiofile.key) + " " + str(audiofile.tempo))
+                    # t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
+                    # t1.start()
+                    # t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
+                    # t2.start()
+                    # t3 = threading.Thread(target=audiofile.channel_audiofile)
+                    # t3.start()
+                    # t1.join()
+                    # t4 = threading.Thread(target=audiofile.librosa_spectrogram)
+                    # t4.start()
+                    # t4.join()
+                    # t5 = threading.Thread(target=audiofile.tempo_graph)
+                    # t5.start()
+                    # t5.join()    
                     t6 = threading.Thread(target=audiofile.quality_spectrogram)
                     t6.start()
                     t6.join()
-                    t3.join()
-                    t2.join()
-
-        return ("GREAT SUCCES!!!")  
-
+                    # t3.join()
+                    # t2.join()
+                    test = "C:\Kiki\Flasklast\QualitySpectrograms\\" + str(audiofile.name)
+        return render_template("public/results.html",nameofsong=test)  
     return render_template("public/upload.html")
 
     

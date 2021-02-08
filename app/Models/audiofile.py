@@ -138,9 +138,9 @@ class Audiofile:
         tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr)
         tempo2 = librosa.beat.beat_track(y=y, sr=sr)
         try:
-            if int(tempo) > int(tempo2)*0.80:
+            if int(tempo) < int(tempo2[0])*0.85:
                 different = True
-            elif int(tempo2) > int(tempo)*0.80:
+            elif int(tempo2[0]) < int(tempo)*0.85:
                 different = True
         except:
             print("An error has occured"), 401
@@ -152,7 +152,7 @@ class Audiofile:
         # Plot on a BPM axis.  We skip the first (0-lag) bin.
         plt.figure(figsize=(8,5))
         plt.semilogx(freqs[1:], librosa.util.normalize(ac)[1:],
-                    label='Onset autocorrelation', basex=2)
+                    label='Onset autocorrelation', base=2)
         plt.axvline(tempo, 0, 1, color='r', alpha=0.75, linestyle='--',
                 label='Tempo: {:.1f} BPM(4/4)'.format(tempo))
         if different:
