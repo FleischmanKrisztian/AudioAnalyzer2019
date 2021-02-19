@@ -3,36 +3,41 @@
 {% block title %}Sign up{% endblock %}
 
 {% block main %}
-
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h1>Sign up</h1>
-      <hr>
+<br>
+<body>
+  <div class="wrapper">
+    <div class="title">
+      Signup Form
     </div>
-  </div>
-</div>
+    <form action="/sign-up" method="POST">
+      <div class="field">
+        <input type="text" id="name" name="name" required>
+        <label>Username</label>
+      </div>
+      <div class="field">
+        <input type="text" id="email" name="email" required>
+        <label>Email Address</label>
+      </div>
+      <div class="field">
+        <input type="password" id="password" name="password" required>
+        <label>Password</label>
+        <p></p>
+      </div>     
+      <div class="field">
+        <input onclick="cookietheemail('email')" type="submit" value="Sign-up">
+      </div>
+      <div class="signup-link">
+       Already a member? <a href="/login">Login</a>
+      </div>
+    </form>
+</body>
+<script>
+  function cookietheemail(email){
+    document.cookie = 'email=' + document.getElementById(email).value ;
+  }
+</script>
 
-<form action="/sign-up" method="POST">
 
-    <div class="form-group">
-      <label>Name</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name">
-    </div>
-  
-    <div class="form-group">
-      <label>Email</label>
-      <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-    </div>
-  
-    <div class="form-group">
-      <label>Password</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Create a password">
-    </div>
-  
-    <button type="submit" class="btn btn-primary">Sign up</button>
-
-  </form>
 
 
 {% endblock %}

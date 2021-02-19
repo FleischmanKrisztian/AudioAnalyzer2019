@@ -1,83 +1,77 @@
 <!doctype html>
 <html lang="en">
 
+
 <head>
-  <!-- Required meta tags -->
+  <script>
+
+    window.onload = function() {
+      navbaritemhider();
+    };
+    function navbaritemhider() {
+      var cookie = document.cookie;
+      var signoutli = document.getElementById("signoutli");
+      var loginli = document.getElementById("loginli");
+      var signupli = document.getElementById("signupli");
+      var uploadli = document.getElementById("uploadli");
+      var profileli = document.getElementById("profileli");
+      if (cookie.includes("email")){
+        signoutli.style.display = "block";
+        uploadli.style.display = "block";
+        profileli.style.display = "block"
+        loginli.style.display = "none";
+        signupli.style.display = "none"; 
+      } 
+      else {
+        signoutli.style.display = "none";
+        uploadli.style.display = "none";
+        profileli.style.display = "none"
+        loginli.style.display = "block";
+        signupli.style.display = "block";       
+      }
+    }
+    </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Import the Bootstrap stylesheet -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-  <!-- Import our custom stylesheet -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.png') }}">
   <title>{% block title %}{% endblock %}</title>
+
+  <div class="myheader">
+    <h1>Sounravel</h1>
+    <p>My Graduation Thesis</p>
+  </div>
 </head>
 
-<body>
-
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-        <a class="navbar-brand" href="#">Flask</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-          </ul>
-        </div>
-      
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/dashboard">Admin</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/upload">Upload</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/signout">Signout</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/sign-up">Signup</a>
-            </li>
-          </ul>
-        </div>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
-            </li>
-          </ul>
-        </div>
-      
-      </nav>
+<body style="background-image: linear-gradient(to bottom, #8a2be2 33%, #f303f3)">
+  <div class="main zigzagmain"></div>
+  <br>
+  <div class="page">
+    <nav class="page__menu page__custom-settings menu">
+      <ul class="menu__list r-list">
+        <li class="menu__group"><a href="/" class="menu__link r-link text-underlined">Home</a></li>
+        <li class="menu__group"><a href="/about" class="menu__link r-link text-underlined">About</a></li>
+        <li id="profileli" class="menu__group"><a href="/profile" class="menu__link r-link text-underlined">Profile</a></li>
+        <li id="uploadli" class="menu__group"><a href="/upload" class="menu__link r-link text-underlined">Upload</a></li>
+        <li id="signoutli" class="menu__group"><a href="/signout" class="menu__link r-link text-underlined">Signout</a></li>
+        <li id="loginli" class="menu__group"><a href="/login" class="menu__link r-link text-underlined">Login</a></li>
+        <li id="signupli" class="menu__group"><a href="/sign-up" class="menu__link r-link text-underlined">Signup</a></li>
+      </ul>
+    </nav>
+    <br>
+  </div>
 
   <main>
-    {% block main %}{% endblock %}
+    <div class="mybody">
+    {% block main %}
+    {% endblock %}
+
+
+    </div>
   </main>
+
+
 
   <!-- Import jquery 3.3.1 slim min -->
   <script src="{{ url_for('static', filename='js/jquery.slim.min.js') }}"></script>
@@ -85,7 +79,26 @@
   <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
   <!-- Import our custom JavaScript -->
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-  {% block script %}{% endblock %}
+  {% block script %}
+
+  {% endblock %}
+  <div class="footer-basic zigzag">
+      <footer>
+          <div class="social">
+            <a href="mailto:fleischman.krisztian@gmail.com"><i class="icon ion-email"></i></a><a href="https://www.instagram.com/kriky_sk8/"><i class="icon ion-social-instagram"></i></a><a href="https://www.facebook.com/fleischman.krisztian"><i class="icon ion-social-facebook"></i></a>
+          </div>
+          <ul class="list-inline">
+              <li class="mylistitem"><a href="/">Home</a></li>
+              <li class="mylistitem"><a href="/about">About</a></li>
+          </ul>
+          <ion-icon name="heart"></ion-icon>
+          <br>
+          <p class="copyright">Fleischman Krisztian © 2021</p>
+      </footer>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 </body>
 
 </html>

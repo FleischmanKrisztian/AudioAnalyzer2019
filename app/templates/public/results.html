@@ -4,9 +4,8 @@
 
 {% block main %}
 
-<h1>RESULTS</h1>
-<h1>{{ nameofsong }}</h1>
-
-<img src="3201opus.png"/>
+<br>
+<img src="{{ url_for('static', filename = 'img/test.png') }}">
+<img src="{{ url_for('../QualitySpectrograms', filename = 'test.png') }}">
 
 {% endblock %}
