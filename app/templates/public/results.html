@@ -1,11 +1,57 @@
 {% extends "public/templates/public_template.html" %}
 
-{% block title %}About Page{% endblock %}
+{% block title %}Results Page{% endblock %}
 
 {% block main %}
 
+<script>
+  window.onload = function() {
+    spotifyhider();
+    navbaritemhider();
+  };
+  function spotifyhider() {
+    var variable = document.getElementById('variable');
+    var existsonspotify = variable.getAttribute('data')
+    if(existsonspotify=="False")
+    {
+      var spotifydiv = document.getElementById("spotifydiv");
+      spotifydiv.style.display = "none";
+    }
+  }
+  </script>
+
+ <h1>{{ nrofchannels }}</h1>
+ 
+ <h1>{{ existsonspotify }}</h1>
+<a href="#" id="variable" data="{{ existsonspotify }}"></a>
 <br>
-<img src="{{ url_for('static', filename = 'img/test.png') }}">
-<img src="{{ url_for('../QualitySpectrograms', filename = 'test.png') }}">
+<h1 style="text-align: center;">RESULTS for {{ nameofsong }}</h1>
+<hr>
+<h1>Spectrogram:</h1>
+<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'nice.png') }}" />
+<h1>Tempograph:</h1>
+<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'tempo.png') }}" />
+<h1>Spectrogram for Quality:</h1>
+<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'quality.png') }}" />
+<h1>MEL Spectrogram:</h1>
+<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'mel.png') }}" />
+<hr>
+<div id="spotifydiv" style="display: block;">
+  <h1>Spotify Data:</h1>
+  <h2>Key of song: {{ keyofsong }}</h2>
+  <br>
+  <h2>Tempo of song: {{ tempoofsong }}</h2>
+  <iframe title="Preview of track" src="https://open.spotify.com/embed/track/{{ idofsong }} " width="25%" height="80" frameborder="0" allowtransparency="true" loading="lazy" allow="encrypted-media"></iframe>
+  <hr>
+</div>
+<h1>Downloadables:</h1>
+
+<button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}L.Wav'">Left Channel</button>
+<button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}R.Wav'">Right Channel</button>
+<button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/accompaniment.Wav'">Instrumental</button>
+<button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/vocals.Wav'">Vocals</button>
+<br>
+<br>
+<br>
 
 {% endblock %}

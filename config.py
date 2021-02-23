@@ -12,13 +12,13 @@ class Config(object):
     
     #DEFAULT VARIABLES
     MAX_AUDIO_FILESIZE = 300000000
-    SEPARATED_FOLDER = "../Flasklast/separatedfiles/"
+    CLIENT_FILES = "../app/static/client/audiofiles/"
     UPLOAD_FOLDER = "../Flasklast/audiofiles/"
-    SPEC_FOLDER = "../Flasklast/spectrograms/"
-    MEL_FOLDER = "../Flasklast/melspectrograms/"
-    CHANNEL_FOLDER = "../Flasklast/channels/"
-    TEMPO_FOLDER = "../Flasklast/tempographs/"
-    QUALITY_FOLDER = "../Flasklast/QualitySpectrograms/"
+    SPEC_FOLDER = "../Flasklast/app/static/dynamicimg/"
+    MEL_FOLDER = "../Flasklast/app/static/dynamicimg/"
+    CHANNEL_FOLDER = "../Flasklast/app/static/client/audiofiles/"
+    TEMPO_FOLDER = "../Flasklast/app/static/dynamicimg/"
+    QUALITY_FOLDER = "../Flasklast/app/static/dynamicimg/"
     MONGO_URI = "mongodb+srv://Krisztian:Password1@flaskappcluster.5akml.mongodb.net/<dbname>?retryWrites=true&w=majority"
 
     

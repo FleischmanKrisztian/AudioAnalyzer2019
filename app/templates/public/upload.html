@@ -4,18 +4,17 @@
 
 {% block main %}
 
-<h1>Upload</h1>
+<h1 style="text-align: center;">Upload</h1>
+<hr>
 
 <form action="/upload" enctype="multipart/form-data" method="POST">
-
-    <div class="form-group">
-      <label>Audiofile</label>
-      <input oninput="filesize(this);" type="file" accept="audio/*" class="form-control" id="audiofile" name="audiofile" placeholder="Submit your audiofile">
-    </div>
-
-    <button type="submit" class="btn btn-primary">Upload</button>
-
-  </form>
+  <div class="newform">
+    <input oninput="filesize(this);" single type="file" accept="audio/*" class="form-control" id="audiofile" name="audiofile">
+      <p>Drag your file here or click in this area.</p>
+      <br>
+      <button type="submit">Upload</button>
+  </div>
+</form>
 
 
 {% endblock %}

@@ -1,6 +1,6 @@
 from app import application
 from app import spotifyapi
-from flask import session, redirect
+from flask import session, redirect, send_from_directory, abort
 from functools import wraps
 from .Models.user import User
 from.Models.Functions import getuser, attributeFromJson, incrementFilesUploaded, add_to_db, loginFunction
@@ -94,6 +94,16 @@ def login():
     
     return render_template("public/login.html")
 
+
+# NEEDS WORK
+@application.route("/getfile/<path:filename>")
+def getfile(filename):
+    try:
+        return send_from_directory(application.config['CLIENT_FILES'],filename,as_attachment=True)
+    except FileNotFoundError:
+        abort(404)
+
+
 @application.route("/upload", methods=["GET", "POST"])
 @login_required
 def upload():
@@ -104,37 +114,44 @@ def upload():
                 return render_template("public/upload.html")
             else:
                 audiofile = Audiofile()
+                audiofile.numberofchannels = 1
                 audiofile.convert_audiofile()
-                # id = spotifyapi.idOfSong(audiofile.name)
-                # if Filefound(id):
-                #     tempo = (spotifyapi.tempo_of_id(id[0]))
-                #     key = (spotifyapi.key_of_id(id[0]))
-                #     audiofile.tempo = tempo[0]
-                #     audiofile.key = key[0]
-                #     print (str(audiofile.key) + " " + str(audiofile.tempo))
-                # t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
-                # t1.start()
-                # t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
-                # t2.start()
-                # t3 = threading.Thread(target=audiofile.channel_audiofile)
-                # t3.start()
-                # t1.join()
-                # t4 = threading.Thread(target=audiofile.librosa_spectrogram)
-                # t4.start()
-                # t4.join()
-                # t5 = threading.Thread(target=audiofile.tempo_graph)
-                # t5.start()
-                # t5.join()    
-                # t6 = threading.Thread(target=audiofile.quality_spectrogram)
-                # t6.start()
+                id = spotifyapi.idOfSong(audiofile.name)
+                if Filefound(id):
+                    tempo = (spotifyapi.tempo_of_id(id[0]))
+                    key = (spotifyapi.key_of_id(id[0]))
+                    audiofile.tempo = tempo[0]
+                    audiofile.key = key[0]
+                    existsonspotify = True
+                else:
+                    audiofile.tempo = "No song was found on spotify"
+                    audiofile.key = "No song was found on spotify"
+                    existsonspotify = False
+
+                t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
+                t1.start()
+                t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
+                t2.start()
+                t3 = threading.Thread(target=audiofile.channel_audiofile)
+                t3.start()
+                t1.join()
+                t4 = threading.Thread(target=audiofile.librosa_spectrogram)
+                t4.start()
+                t4.join()
+                t5 = threading.Thread(target=audiofile.tempo_graph)
+                t5.start()
+                t5.join()    
+                t6 = threading.Thread(target=audiofile.quality_spectrogram)
+                t6.start()
                 emailFromCookie = request.cookies.get('email')
                 t7 = threading.Thread(target=incrementFilesUploaded,args=[emailFromCookie])
                 t7.start()
-                # t6.join()
-                # t3.join()
-                # t2.join()
+                t7.join()
+                t6.join()
+                t3.join()
+                t2.join()
                     
-        return render_template("public/results.html",nameofsong=audiofile.name)  
+        return render_template("public/results.html",nameofsong=audiofile.name, keyofsong=audiofile.key, tempoofsong=audiofile.tempo, idofsong = id[0], nrofchannels = audiofile.numberofchannels, existsonspotify = existsonspotify)  
     return render_template("public/upload.html")
 
     

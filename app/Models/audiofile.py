@@ -30,6 +30,7 @@ class Audiofile:
         self.length = "NOTYETANALYSED"
         self.tempo_from_spotify = 0
         self.wavormp3 = True
+        self.numberofchannels = 0
         self.spotifyID = "NONE"
         self.bitrate = "NOTYETANALYSED"
         self.size = request.cookies.get("filesize")
@@ -70,23 +71,34 @@ class Audiofile:
             signal = np.array(np.frombuffer(signal, dtype='UInt8')-128, dtype=np.int16)
         elif wav_file.getsampwidth() == 2:
             signal = np.frombuffer(signal, dtype=np.int16)
+        elif wav_file.getsampwidth() == 4:
+            signal = np.frombuffer(signal, dtype=np.int32)
         else:
             raise RuntimeError("Unsupported sample width")
+        self.numberofchannels = wav_file.getnchannels()
 
         # http://schlameel.com/2017/06/09/interleaving-and-de-interleaving-data-with-python/
-        deinterleaved = [signal[idx::wav_file.getnchannels()] for idx in range(wav_file.getnchannels())]
+        deinterleaved = [signal[idx::self.numberofchannels] for idx in range(self.numberofchannels)]
 
         #Get time from indices
         fs = wav_file.getframerate()
-        Time=np.linspace(0, round(len(signal)/wav_file.getnchannels()/fs), round(len(signal)/wav_file.getnchannels()))
+        Time=np.linspace(0, round(len(signal)/self.numberofchannels/fs), round(len(signal)/self.numberofchannels))
         #Plot
         plt.figure(figsize=(10, 4))
+        plt.rcParams['axes.facecolor'] = 'black'
+        plt.rcParams['savefig.facecolor'] = 'black'
+        plt.rcParams['axes.edgecolor'] = 'white'
+        plt.rcParams['lines.color'] = 'white'
+        plt.rcParams['text.color'] = 'white'    
+        plt.rcParams['xtick.color'] = 'white'    
+        plt.rcParams['ytick.color'] = 'white'
+        plt.rcParams['axes.labelcolor'] = 'white'
         plt.title('Signal Wave')
         plt.xlabel('Time (s)')
         plt.ylabel('Frequency (Hz)')
         for channel in deinterleaved:
             plt.plot(Time,channel, linewidth=.035)
-            plt.savefig(application.config['SPEC_FOLDER'] + self.name + ".png", dpi=72)
+            plt.savefig(application.config['SPEC_FOLDER'] + self.name + "nice.png", dpi=72)
         print("Thread 1 finished")
         
     # MEL SPECTROGRAM
@@ -98,11 +110,19 @@ class Audiofile:
         # Passing through arguments to the Mel filters
         S = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=128,fmax=32000)
         plt.figure(figsize=(10, 4))
+        plt.rcParams['axes.facecolor'] = 'black'
+        plt.rcParams['savefig.facecolor'] = 'black'
+        plt.rcParams['axes.edgecolor'] = 'white'
+        plt.rcParams['lines.color'] = 'white'
+        plt.rcParams['text.color'] = 'white'    
+        plt.rcParams['xtick.color'] = 'white'    
+        plt.rcParams['ytick.color'] = 'white'
+        plt.rcParams['axes.labelcolor'] = 'white'
         librosa.display.specshow(librosa.power_to_db(S,ref=np.max),sr=sr,y_axis='mel', fmax=32000,x_axis='time')
         plt.colorbar(format='%+2.0f dB')
         plt.title('Mel spectrogram')
         plt.tight_layout()
-        plt.savefig(application.config['MEL_FOLDER'] + self.name + ".png", dpi=72)
+        plt.savefig(application.config['MEL_FOLDER'] + self.name + "mel.png", dpi=72)
         print("Thread 4 finished")
 
     # instrumental/vocal Separator
@@ -118,7 +138,6 @@ class Audiofile:
         print("Thread 2 finished")
 
     def channel_audiofile(self):
-        # file = self.path
         fs, data = wavfile.read(self.path)
 
         wavfile.write(application.config['CHANNEL_FOLDER'] + self.name + "L.Wav", fs, data[:, 0])
@@ -127,11 +146,9 @@ class Audiofile:
         print("Thread 3 finished")
 
     def tempo_graph(self):
-       # Estimate a static tempo
             
         y, sr = librosa.load(self.path)
         tempo = librosa.beat.beat_track(y=y, sr=sr)
-        self.tempo = tempo
         different = False
 
         onset_env = librosa.onset.onset_strength(y, sr=sr)
@@ -150,7 +167,15 @@ class Audiofile:
         ac = librosa.autocorrelate(onset_env, 2 * sr // hop_length)
         freqs = librosa.tempo_frequencies(len(ac), sr=sr, hop_length=hop_length)
         # Plot on a BPM axis.  We skip the first (0-lag) bin.
-        plt.figure(figsize=(8,5))
+        plt.figure(figsize=(10,4))
+        plt.rcParams['axes.facecolor'] = 'black'
+        plt.rcParams['savefig.facecolor'] = 'black'
+        plt.rcParams['axes.edgecolor'] = 'white'
+        plt.rcParams['lines.color'] = 'white'
+        plt.rcParams['text.color'] = 'white'    
+        plt.rcParams['xtick.color'] = 'white'    
+        plt.rcParams['ytick.color'] = 'white'
+        plt.rcParams['axes.labelcolor'] = 'white'
         plt.semilogx(freqs[1:], librosa.util.normalize(ac)[1:],
                     label='Onset autocorrelation', base=2)
         plt.axvline(tempo, 0, 1, color='r', alpha=0.75, linestyle='--',
@@ -163,7 +188,7 @@ class Audiofile:
         plt.title('Static tempo estimation')
         plt.legend(frameon=True)
         plt.axis('tight')
-        plt.savefig(application.config['TEMPO_FOLDER'] + self.name + ".png", dpi=72)
+        plt.savefig(application.config['TEMPO_FOLDER'] + self.name + "tempo.png", dpi=72)
         print("Thread 5 finished")
 
 
@@ -185,7 +210,7 @@ class Audiofile:
         plt.rcParams['xtick.color'] = 'white'    
         plt.rcParams['ytick.color'] = 'white'
         plt.rcParams['axes.labelcolor'] = 'white'
-        fig = plt.figure(num=None, figsize=(12, 7.5), dpi=72)
+        fig = plt.figure(num=None, figsize=(10, 4), dpi=72)
         ax = fig.add_subplot(111)
         ax.xaxis.set_major_locator(ticker.MultipleLocator(30))
         ax.xaxis.set_minor_locator(ticker.MultipleLocator(5))
@@ -198,6 +223,6 @@ class Audiofile:
         plt.specgram(sound_info, Fs=frame_rate, cmap='gnuplot')
         cbar = plt.colorbar()
         cbar.ax.set_ylabel('dB')
-        plt.savefig(application.config['QUALITY_FOLDER'] + self.name + ".png")
+        plt.savefig(application.config['QUALITY_FOLDER'] + self.name + "quality.png")
         print("Thread 6 finished")
     

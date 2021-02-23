@@ -59,8 +59,7 @@ def tempo_of_id(id):
         return ('error while getting tempo'), 500
 
     
-# search = 'drake upset'
-# search = 'asodiyaslidualsjxbasukyrtasldj'
+# search = '3201opus'
 # id = idOfSong(search)
 # print(id)
 # print(key_of_id(id[0]))
