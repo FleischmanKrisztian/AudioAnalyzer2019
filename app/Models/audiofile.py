@@ -133,7 +133,7 @@ class Audiofile:
         elif numberOfStems == 2:
             separator = Separator('spleeter:2stems')
 
-        separator.separate_to_file(file, application.config['SEPARATED_FOLDER'])
+        separator.separate_to_file(file, application.config['CHANNEL_FOLDER'])
 
         print("Thread 2 finished")
 

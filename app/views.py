@@ -114,7 +114,6 @@ def upload():
                 return render_template("public/upload.html")
             else:
                 audiofile = Audiofile()
-                audiofile.numberofchannels = 1
                 audiofile.convert_audiofile()
                 id = spotifyapi.idOfSong(audiofile.name)
                 if Filefound(id):
@@ -128,30 +127,30 @@ def upload():
                     audiofile.key = "No song was found on spotify"
                     existsonspotify = False
 
-                t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
-                t1.start()
+                # t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
+                # t1.start()
                 t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
                 t2.start()
                 t3 = threading.Thread(target=audiofile.channel_audiofile)
                 t3.start()
-                t1.join()
-                t4 = threading.Thread(target=audiofile.librosa_spectrogram)
-                t4.start()
-                t4.join()
-                t5 = threading.Thread(target=audiofile.tempo_graph)
-                t5.start()
-                t5.join()    
-                t6 = threading.Thread(target=audiofile.quality_spectrogram)
-                t6.start()
-                emailFromCookie = request.cookies.get('email')
-                t7 = threading.Thread(target=incrementFilesUploaded,args=[emailFromCookie])
-                t7.start()
-                t7.join()
-                t6.join()
+                # t1.join()
+                # t4 = threading.Thread(target=audiofile.librosa_spectrogram)
+                # t4.start()
+                # t4.join()
+                # t5 = threading.Thread(target=audiofile.tempo_graph)
+                # t5.start()
+                # t5.join()    
+                # t6 = threading.Thread(target=audiofile.quality_spectrogram)
+                # t6.start()
+                # emailFromCookie = request.cookies.get('email')
+                # t7 = threading.Thread(target=incrementFilesUploaded,args=[emailFromCookie])
+                # t7.start()
+                # t7.join()
+                # t6.join()
                 t3.join()
                 t2.join()
                     
-        return render_template("public/results.html",nameofsong=audiofile.name, keyofsong=audiofile.key, tempoofsong=audiofile.tempo, idofsong = id[0], nrofchannels = audiofile.numberofchannels, existsonspotify = existsonspotify)  
+        return render_template("public/results.html",nameofsong=audiofile.name, keyofsong=audiofile.key, tempoofsong=audiofile.tempo, idofsong = id[0], existsonspotify = existsonspotify)  
     return render_template("public/upload.html")
 
     

@@ -19,8 +19,6 @@
     }
   }
   </script>
-
- <h1>{{ nrofchannels }}</h1>
  
  <h1>{{ existsonspotify }}</h1>
 <a href="#" id="variable" data="{{ existsonspotify }}"></a>
@@ -42,10 +40,10 @@
   <br>
   <h2>Tempo of song: {{ tempoofsong }}</h2>
   <iframe title="Preview of track" src="https://open.spotify.com/embed/track/{{ idofsong }} " width="25%" height="80" frameborder="0" allowtransparency="true" loading="lazy" allow="encrypted-media"></iframe>
+  <h2>For additional info provided by spotify head over to <a style="color: darkblue;" href="https://musicstax.com">Musicstax - Music Analysis</a></h2>
   <hr>
 </div>
 <h1>Downloadables:</h1>
-
 <button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}L.Wav'">Left Channel</button>
 <button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}R.Wav'">Right Channel</button>
 <button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/accompaniment.Wav'">Instrumental</button>

@@ -15,12 +15,7 @@ app/__pycache__/views.cpython-38.pyc
 app/__pycache__/admin_views.cpython-38.pyc
 app/Models/__pycache__/audiofile.cpython-38.pyc
 
-
-
-
-
-
-
-
 *.pyc
 *.pyc
+app/Models/__pycache__/audiofile.cpython-38.pyc
+app/__pycache__/views.cpython-38.pyc
