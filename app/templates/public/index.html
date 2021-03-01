@@ -1,21 +1,30 @@
 {% extends "public/templates/public_template.html" %}
 
-{% block title %}Index{% endblock %}
+{% block title %}Home Page{% endblock %}
 
 {% block main %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename = 'css/style.css') }}">
-    <title>Index</title>
-</head>
-<body>
-    <h1 style="color:black;">Index</h1>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
-</html>
 
+<h1>About</h1>
+<hr>
 
+<h1 class="home-title">
+    <span>Sounravel is a website that allows the user to get information about an audiofile.</span>
+    <span>The main purpose was to be able to process the files without having to download</span>
+    <span>additional software.</span>
+    <hr>
+    <span>In its current form it is able to provide the following images:</span>
+    <span>MEL Spectrogram , Spectrogram for determining Quality of audiofile,</span>
+    <span>"Soundcloud" type of Spectrogram and Tempograph.</span>
+    <span>In addition it shows Spotify's estimation of its tempo and key.</span>
+    <hr>
+    <span>The application also generates four downloadable files:</span>
+    <span>Left channel, Right channel and Instrumental and Vocals</span>
+    <hr>
+    <span>The web page was developed by Fleischman Krisztian in order</span>
+    <span>to receive my Bachelor's Degree.</span>
+    <span>I am currently completing the last year at Transilvania University of Brasov.</span>
+    <span>I have studied Electrical Engineering and Computer Science during the period</span>
+    <span>of 2017-2021</span>
+    <br>
+</h1>
 {% endblock %}

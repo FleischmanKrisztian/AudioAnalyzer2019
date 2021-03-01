@@ -26,16 +26,9 @@ class Audiofile:
     def __init__(self):
         fileaswhole = request.files["audiofile"]
         self.namewithextension = fileaswhole.filename
-        self.name = os.path.splitext(fileaswhole.filename)[0]
-        self.length = "NOTYETANALYSED"
-        self.tempo_from_spotify = 0
-        self.wavormp3 = True
         self.numberofchannels = 0
-        self.spotifyID = "NONE"
-        self.bitrate = "NOTYETANALYSED"
-        self.size = request.cookies.get("filesize")
-        now = datetime.datetime.now()
-        self.uploadtime = str(now.hour) + "-" + str(now.minute) + "-" + str(now.second)
+        self.name = os.path.splitext(fileaswhole.filename)[0]
+        self.wavormp3 = True
         wronglyformatedpath = os.path.join(application.config['UPLOAD_FOLDER'], self.namewithextension)
         self.path = wronglyformatedpath.replace('\\','/')
         doc = fileaswhole
@@ -75,14 +68,15 @@ class Audiofile:
             signal = np.frombuffer(signal, dtype=np.int32)
         else:
             raise RuntimeError("Unsupported sample width")
-        self.numberofchannels = wav_file.getnchannels()
+        numberofchannels = wav_file.getnchannels()
+        self.numberofchannels = numberofchannels
 
         # http://schlameel.com/2017/06/09/interleaving-and-de-interleaving-data-with-python/
-        deinterleaved = [signal[idx::self.numberofchannels] for idx in range(self.numberofchannels)]
+        deinterleaved = [signal[idx::numberofchannels] for idx in range(numberofchannels)]
 
         #Get time from indices
         fs = wav_file.getframerate()
-        Time=np.linspace(0, round(len(signal)/self.numberofchannels/fs), round(len(signal)/self.numberofchannels))
+        Time=np.linspace(0, round(len(signal)/numberofchannels/fs), round(len(signal)/numberofchannels))
         #Plot
         plt.figure(figsize=(10, 4))
         plt.rcParams['axes.facecolor'] = 'black'
@@ -99,7 +93,6 @@ class Audiofile:
         for channel in deinterleaved:
             plt.plot(Time,channel, linewidth=.035)
             plt.savefig(application.config['SPEC_FOLDER'] + self.name + "nice.png", dpi=72)
-        print("Thread 1 finished")
         
     # MEL SPECTROGRAM
     def librosa_spectrogram(self):
@@ -123,7 +116,6 @@ class Audiofile:
         plt.title('Mel spectrogram')
         plt.tight_layout()
         plt.savefig(application.config['MEL_FOLDER'] + self.name + "mel.png", dpi=72)
-        print("Thread 4 finished")
 
     # instrumental/vocal Separator
     def separate_audiofile(self,numberOfStems):
@@ -135,15 +127,11 @@ class Audiofile:
 
         separator.separate_to_file(file, application.config['CHANNEL_FOLDER'])
 
-        print("Thread 2 finished")
-
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
 
         wavfile.write(application.config['CHANNEL_FOLDER'] + self.name + "L.Wav", fs, data[:, 0])
         wavfile.write(application.config['CHANNEL_FOLDER'] + self.name + "R.Wav", fs, data[:, 1])
-
-        print("Thread 3 finished")
 
     def tempo_graph(self):
             
@@ -189,8 +177,6 @@ class Audiofile:
         plt.legend(frameon=True)
         plt.axis('tight')
         plt.savefig(application.config['TEMPO_FOLDER'] + self.name + "tempo.png", dpi=72)
-        print("Thread 5 finished")
-
 
     def quality_spectrogram(self):
         wavname=self.path
@@ -224,5 +210,3 @@ class Audiofile:
         cbar = plt.colorbar()
         cbar.ax.set_ylabel('dB')
         plt.savefig(application.config['QUALITY_FOLDER'] + self.name + "quality.png")
-        print("Thread 6 finished")
-    

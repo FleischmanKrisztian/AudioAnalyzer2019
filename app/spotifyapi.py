@@ -29,15 +29,23 @@ def idOfSong(search_str):
 
 def key_of_id(id):
     try:
-        result = sp.audio_features(str(id))
-        resultstr = str(result)
-        pos_of_key = resultstr.find('key') + 6
-        key_of_song = resultstr[pos_of_key:pos_of_key+2]
+        result = str(sp.audio_features(str(id)))
+        pos_of_key = result.find('key') + 6
+        key_of_song = result[pos_of_key:pos_of_key+2]
+        pos_of_mode = result.find('mode') + 7
+        mode_of_song = int(result[pos_of_mode:pos_of_mode+1])
         if key_of_song[1] == ',':
             key_of_song = key_of_song[0]
-        return (key_of_song) , 200
+        key_of_song_as_string = keyAsString(int(key_of_song),int(mode_of_song))
+        return (key_of_song_as_string) , 200
     except:
         return('error while getting key'), 500
+
+def keyAsString(key, mode):
+    keys = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
+    modes = ["Minor","Major"]
+    keystring = keys[key] + " " + modes[mode]
+    return keystring
 
 def alldetails(id):
     try:
@@ -61,6 +69,5 @@ def tempo_of_id(id):
     
 # search = '3201opus'
 # id = idOfSong(search)
-# print(id)
-# print(key_of_id(id[0]))
+# key_of_id(id[0])
 # print(tempo_of_id(id[0]))

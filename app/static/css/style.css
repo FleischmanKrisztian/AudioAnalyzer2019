@@ -9,10 +9,12 @@
 
 .body{
   background: #8a2be2;
+  max-height: 1000px;
 }
 
 .mybody{
   min-height: 700px;
+  width: auto;
   background-image: linear-gradient(to bottom, #8a2be2 33%, #e004e0);
 }
 
@@ -290,12 +292,6 @@ form .signup-link a:hover{
 }
 
 
-/*
-=====
-CORE STYLES
-=====
-*/
-
 .menu{
   --rLinkColor: var(--menuLinkColor, currentColor);
 }
@@ -313,13 +309,6 @@ focus state
   outline-offset: var(--menuLinkOutlineOffset);
 }
 
-/* 
-fading siblings
-*/
-
-.menu:hover .menu__link:not(:hover){
-  --rLinkColor: var(--menuLinkColorUnactive, rgb(255, 187, 0));
-}
 
 /*
 =====
@@ -337,7 +326,7 @@ PRESENTATION STYLES
 
 .menu__link{
   padding: var(--menuLinkPadding, 1.5rem 2.5rem);
-  font-weight: 700;
+  font-weight: bolder;
   text-transform: uppercase;
 }
 
@@ -392,7 +381,6 @@ SETTINGS
 */
 
 .page__custom-settings{
-  --menuBackgroundColor: #00d9ff;
   --menuLinkColor: rgb(0, 0, 0);
   --menuLinkColorUnactive: #5e0aac ;
   --menuLinkOutlineOffset: -0rem; 
@@ -405,7 +393,6 @@ DEMO
 */
 
 body{
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
   margin: 0;
   min-height: 100vh;
   display: flex;  
@@ -458,7 +445,7 @@ body{
   margin: 0;
   font-weight: bold;
   color: #000000;
-  background: #e004e0;
+  background: #c906c9;
   border: none;
   width: 508px;
   height: 35px;
@@ -553,4 +540,220 @@ button.big-button:active::before {
   
       box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
 
+}
+
+/* About text */
+
+/* Basic styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root{
+    --bg-color: linear-gradient(to bottom, #8a2be2 33%, #e004e0);
+}
+
+body {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  color: #000;
+  background-color: var(--bg-color);
+  font-family: 'Maitree', serif;
+}
+
+h1{
+    font-size: 3em;
+    font-weight: normal;
+}
+
+/* title styles */
+.home-title span{
+    position: relative;
+    overflow: hidden;
+    display: block;
+    line-height: 1.2;
+}
+
+.home-title span::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #fc00ef;
+    animation: a-ltr-after 1.5s cubic-bezier(.77,0,.18,1) forwards;
+    transform: translateX(-101%);
+}
+
+.home-title span::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-color);
+    animation: a-ltr-before 1.5s cubic-bezier(.77,0,.18,1) forwards;
+    transform: translateX(0);
+}
+
+.home-title span:nth-of-type(1)::before,
+.home-title span:nth-of-type(1)::after{
+    animation-delay: 0s;
+}
+.home-title span:nth-of-type(2)::before,
+.home-title span:nth-of-type(2)::after{
+    animation-delay: 0.3s;
+}
+.home-title span:nth-of-type(3)::before,
+.home-title span:nth-of-type(3)::after{
+    animation-delay: 0.6s;
+}
+.home-title span:nth-of-type(4)::before,
+.home-title span:nth-of-type(4)::after{
+    animation-delay: 0.9s;
+}
+.home-title span:nth-of-type(5)::before,
+.home-title span:nth-of-type(5)::after{
+    animation-delay: 1.2s;
+}
+.home-title span:nth-of-type(6)::before,
+.home-title span:nth-of-type(6)::after{
+    animation-delay: 1.5s;
+}
+.home-title span:nth-of-type(7)::before,
+.home-title span:nth-of-type(7)::after{
+    animation-delay: 1.8s;
+}
+.home-title span:nth-of-type(8)::before,
+.home-title span:nth-of-type(8)::after{
+    animation-delay: 2.1s;
+}
+.home-title span:nth-of-type(9)::before,
+.home-title span:nth-of-type(9)::after{
+    animation-delay: 2.4s;
+}
+.home-title span:nth-of-type(10)::before,
+.home-title span:nth-of-type(10)::after{
+    animation-delay: 2.7s;
+}
+.home-title span:nth-of-type(11)::before,
+.home-title span:nth-of-type(11)::after{
+    animation-delay: 3s;
+}
+.home-title span:nth-of-type(12)::before,
+.home-title span:nth-of-type(12)::after{
+    animation-delay: 3.3s;
+}
+.home-title span:nth-of-type(13)::before,
+.home-title span:nth-of-type(13)::after{
+    animation-delay: 3.6s;
+}
+.home-title span:nth-of-type(14)::before,
+.home-title span:nth-of-type(14)::after{
+    animation-delay: 3.9s;
+}
+
+@keyframes a-ltr-after{
+    0% {transform: translateX(-100%)}
+    100% {transform: translateX(101%)}
+}
+
+@keyframes a-ltr-before{
+    0% {transform: translateX(0)}
+    100% {transform: translateX(200%)}
+}
+
+/* Loader */
+
+.loader-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to bottom, #8a2be2 33%, #e004e0);
+  display:flex;
+  justify-content:center;
+  align-items: center;
+}
+.loader {
+  display: inline-block;
+  width: 150px;
+  height: 150px;
+  top: 400px;
+  left:auto;
+  overflow: hidden;
+  position:fixed;
+  border: 8px solid #000000;
+  animation: loader 2s infinite ease;
+}
+.loader-inner {
+  vertical-align:top;
+  display: inline-block;
+  width: 100%;
+  background-color: #000000;
+  animation: loader-inner 2s infinite ease-in;
+}
+@keyframes loader {
+  0% { transform: rotate(0deg);}
+  25% { transform: rotate(180deg);}
+  50% { transform: rotate(180deg);}
+  75% { transform: rotate(360deg);}
+  100% { transform: rotate(360deg);}
+}
+@keyframes loader-inner {
+  0% { height: 0%;}
+  25% { height: 0%;}
+  50% { height: 100%;}
+  75% { height: 100%;}
+  100% { height: 0%;}
+}
+
+/* Tooltip */
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400');
+
+.mytooltip {
+  position: relative;
+  background: #e004e0;
+  --mycolor: #04a2e0;
+  padding: 5px 12px;
+  margin: 5px;
+  width: 30px;
+  font-size: 30px;
+  font-family: 'Maitree', serif;
+  font-weight: bold;
+  opacity: 1;
+  border-radius: 100%;
+  color: #000000;
+}
+
+.mytooltip:before,
+.mytooltip:after {
+  position: absolute;
+  content: '';
+  opacity: 0;
+  transition: all 0.4s ease;
+}
+
+.mytooltip:after {
+  content: attr(data-tooltip);
+  background: var(--mycolor);
+  font-size: 15px;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  transform: translateX(-20px);
+}
+
+.mytooltip:hover::before,
+.mytooltip:hover::after {
+  opacity: 1;
+  transform: translateX(20px);
 }
