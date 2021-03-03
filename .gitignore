@@ -135,3 +135,5 @@ pretrained_models/
 app/static/client/audiofiles/
 app/static/client/images/
 app/static/client/IncomingAudio/
+__pycache__/
+*.pyc

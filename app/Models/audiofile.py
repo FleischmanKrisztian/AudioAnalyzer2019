@@ -125,13 +125,13 @@ class Audiofile:
         elif numberOfStems == 2:
             separator = Separator('spleeter:2stems')
 
-        separator.separate_to_file(file, application.config['CLIENT_AUDIO'])
+        separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
 
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
 
-        wavfile.write(application.config['CLIENT_AUDIO'] + self.name + "L.Wav", fs, data[:, 0])
-        wavfile.write(application.config['CLIENT_AUDIO'] + self.name + "R.Wav", fs, data[:, 1])
+        wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "L.Wav", fs, data[:, 0])
+        wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "R.Wav", fs, data[:, 1])
 
     def tempo_graph(self):
             
