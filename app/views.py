@@ -1,14 +1,12 @@
 from app import application
 from app import spotifyapi
-from flask import session, redirect, send_from_directory, abort
+from flask import session, send_from_directory, abort, render_template, request, redirect, make_response
 from functools import wraps
 from .Models.user import User
 from.Models.Functions import getuser, attributeFromJson, incrementFilesUploaded, add_to_db, loginFunction
 from .Models.audiofile import Audiofile
-from flask import render_template, request, redirect, jsonify
-from flask import make_response
 import json
-import threading, concurrent.futures
+import threading
 
 #Decorators
 def login_required(f):

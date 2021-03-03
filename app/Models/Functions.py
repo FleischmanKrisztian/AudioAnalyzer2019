@@ -39,10 +39,8 @@ def loginFunction():
 
     return ("Invalid Login Credentials!"), 401
 
-
 def update_user(user, email):
     try:
-        # jsonstring = user.usertojson()
         db.users.delete_one({"email":email})
         db.users.insert_one(user)
         return ("Updated successfully"), 200

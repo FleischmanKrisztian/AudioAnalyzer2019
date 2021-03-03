@@ -1,14 +1,14 @@
 import sys
 import json
 import spotipy
+from app import application
 import time
 from spotipy.oauth2 import SpotifyClientCredentials
-cid = '82aafe129aff41178bcd0b6dcd4aed39'
-secret = '7310d1368608421e90c8ab7169d84675'
+
+cid = application.config["SPOTIFY_ID"]
+secret = application.config["SPOTIFY_SECRET"]
 client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
 sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
-
-
 
 def idOfSong(search_str):
     try:
@@ -65,9 +65,3 @@ def tempo_of_id(id):
         return (tempo_of_song), 200
     except:
         return ('error while getting tempo'), 500
-
-    
-# search = '3201opus'
-# id = idOfSong(search)
-# key_of_id(id[0])
-# print(tempo_of_id(id[0]))
