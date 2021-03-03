@@ -166,12 +166,10 @@ class Audiofile:
         plt.rcParams['axes.labelcolor'] = 'white'
         plt.semilogx(freqs[1:], librosa.util.normalize(ac)[1:],
                     label='Onset autocorrelation', base=2)
-        plt.axvline(tempo, 0, 1, color='r', alpha=0.75, linestyle='--',
-                label='Tempo: {:.1f} BPM(4/4)'.format(tempo))
+        plt.axvline(tempo, 0, 1, color='r', alpha=0.75, linestyle='--',label='Tempo: {:.1f} BPM(4/4)'.format(tempo))
         if different:
-            tempo2 = np.asscalar(tempo2)
-            plt.axvline(tempo2, 0, 2, color='y', alpha=0.75, linestyle='--', label='Possible Tempo: {:.1f} BPM '.format(tempo2))
-        plt.xlabel('Tempo (BPM)')
+            tempo2 = np.asscalar(tempo2[0])
+            plt.axvline(tempo2, 0, 2, color='cyan', alpha=0.75, linestyle='--', label='Possible Tempo: {:.1f} BPM '.format(tempo2))
         plt.grid()
         plt.title('Static tempo estimation')
         plt.legend(frameon=True)
