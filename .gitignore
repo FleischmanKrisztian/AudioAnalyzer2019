@@ -136,4 +136,5 @@ app/static/client/audiofiles/
 app/static/client/images/
 app/static/client/IncomingAudio/
 __pycache__/
+app/__pycache__/
 *.pyc
