@@ -36,17 +36,23 @@
 <br>
 <h1 style="text-align: center;">RESULTS for {{ nameofsong }}</h1>
 <hr>
-<h1>Spectrogram:<span class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
-<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'nice.png') }}" />
-<h1>Tempograph:<span class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
-<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'tempo.png') }}" />
-<h1>Spectrogram for Quality:<span class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
-<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'quality.png') }}" />
-<h1>MEL Spectrogram:<span class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
-<img src="{{ url_for('static', filename='dynamicimg/' + nameofsong + 'mel.png') }}" />
+<h1>Spectrogram:</h1>
+<img src="{{ url_for('static', filename='client/images/' + nameofsong + 'nice.png') }}" />
+<h1>Tempograph:<span class="mytooltip" data-tooltip="The estimated BPM of the audiofile in 4/4 time signature.">?</span></h1>
+<img src="{{ url_for('static', filename='client/images/' + nameofsong + 'tempo.png') }}" />
+<h1>Spectrogram for Quality:<span class="mytooltip" data-tooltip="
+  1141kbps - [22kHz+]
+  320kbps - [22-20kHz]
+  256kbps - [20-18kHz]
+  192kbps - [18-19kHz] 
+  128kbps - [16-17kHz]
+  64kbps - [11kHz]">?</span></h1>
+<img src="{{ url_for('static', filename='client/images/' + nameofsong + 'quality.png') }}" />
+<h1>MEL Spectrogram:<span class="mytooltip" data-tooltip="We converted the frequency to log scale and amplitude to dB">?</span></h1>
+<img src="{{ url_for('static', filename='client/images/' + nameofsong + 'mel.png') }}" />
 <hr>
 <div id="spotifydiv" style="display: block;">
-  <h1>Spotify Data:<span style="background:#6d06ce" class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
+  <h1>Spotify Data:<span style="background:#6d06ce" class="mytooltip" data-tooltip="This data comes from spotify based on the name of the audiofile.">?</span></h1>
   <h2>Key of song: {{ keyofsong }}</h2>
   <br>
   <h2>Tempo of song: {{ tempoofsong }}</h2>
@@ -54,14 +60,14 @@
   <h2>For additional info provided by spotify head over to <a style="color: darkblue;" href="https://musicstax.com">Musicstax - Music Analysis</a></h2>
   <hr>
 </div>
-<h1>Channels:<span style="background:#6d06ce" class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
+<h1>Channels:<span style="background:#6d06ce" class="mytooltip" data-tooltip="The two channels of the file separated into left and right channels.">?</span></h1>
 <div id="channeldiv" style="display: block;">
   <button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}L.Wav'">Left Channel</button>
   <button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}R.Wav'">Right Channel</button>
 </div>
 <br>
 <hr>
-<h1>Separations:<span style="background:#6d06ce"  class="mytooltip" data-tooltip="username must consist of 29 symbols.">?</span></h1>
+<h1>Separations:<span style="background:#6d06ce"  class="mytooltip" data-tooltip="Separated files using Machine Learning.">?</span></h1>
 <button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/accompaniment.Wav'">Instrumental</button>
 <button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/vocals.Wav'">Vocals</button>
 <br>

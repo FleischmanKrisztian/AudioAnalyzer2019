@@ -92,7 +92,7 @@ class Audiofile:
         plt.ylabel('Frequency (Hz)')
         for channel in deinterleaved:
             plt.plot(Time,channel, linewidth=.035)
-            plt.savefig(application.config['SPEC_FOLDER'] + self.name + "nice.png", dpi=72)
+            plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "nice.png", dpi=72)
         
     # MEL SPECTROGRAM
     def librosa_spectrogram(self):
@@ -115,7 +115,7 @@ class Audiofile:
         plt.colorbar(format='%+2.0f dB')
         plt.title('Mel spectrogram')
         plt.tight_layout()
-        plt.savefig(application.config['MEL_FOLDER'] + self.name + "mel.png", dpi=72)
+        plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
     def separate_audiofile(self,numberOfStems):
@@ -125,13 +125,13 @@ class Audiofile:
         elif numberOfStems == 2:
             separator = Separator('spleeter:2stems')
 
-        separator.separate_to_file(file, application.config['CHANNEL_FOLDER'])
+        separator.separate_to_file(file, application.config['CLIENT_AUDIO'])
 
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
 
-        wavfile.write(application.config['CHANNEL_FOLDER'] + self.name + "L.Wav", fs, data[:, 0])
-        wavfile.write(application.config['CHANNEL_FOLDER'] + self.name + "R.Wav", fs, data[:, 1])
+        wavfile.write(application.config['CLIENT_AUDIO'] + self.name + "L.Wav", fs, data[:, 0])
+        wavfile.write(application.config['CLIENT_AUDIO'] + self.name + "R.Wav", fs, data[:, 1])
 
     def tempo_graph(self):
             
@@ -176,7 +176,7 @@ class Audiofile:
         plt.title('Static tempo estimation')
         plt.legend(frameon=True)
         plt.axis('tight')
-        plt.savefig(application.config['TEMPO_FOLDER'] + self.name + "tempo.png", dpi=72)
+        plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "tempo.png", dpi=72)
 
     def quality_spectrogram(self):
         wavname=self.path
@@ -209,4 +209,4 @@ class Audiofile:
         plt.specgram(sound_info, Fs=frame_rate, cmap='gnuplot')
         cbar = plt.colorbar()
         cbar.ax.set_ylabel('dB')
-        plt.savefig(application.config['QUALITY_FOLDER'] + self.name + "quality.png")
+        plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "quality.png")

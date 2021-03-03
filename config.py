@@ -1,7 +1,6 @@
 import pymongo
 from app import application
 from flask_pymongo import PyMongo
-import pyAudioAnalysis , ffmpeg, pymongo, pydub, os, uuid, io, datetime
 
 class Config(object):
     DEBUG= False
@@ -12,13 +11,10 @@ class Config(object):
     
     #DEFAULT VARIABLES
     MAX_AUDIO_FILESIZE = 300000000
-    CLIENT_FILES = "../app/static/client/audiofiles/"
-    UPLOAD_FOLDER = "../Flasklast/audiofiles/"
-    SPEC_FOLDER = "../Flasklast/app/static/dynamicimg/"
-    MEL_FOLDER = "../Flasklast/app/static/dynamicimg/"
-    CHANNEL_FOLDER = "../Flasklast/app/static/client/audiofiles/"
-    TEMPO_FOLDER = "../Flasklast/app/static/dynamicimg/"
-    QUALITY_FOLDER = "../Flasklast/app/static/dynamicimg/"
+    UPLOAD_FOLDER = "../Flasklast/app/static/client/IncomingAudio/"
+    CLIENT_FILES = "../Flasklast/app/static/client/"
+    CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
+    CLIENT_AUDIO = "../app/static/client/audiofiles/"
     MONGO_URI = "mongodb+srv://Krisztian:Password1@flaskappcluster.5akml.mongodb.net/<dbname>?retryWrites=true&w=majority"
 
     

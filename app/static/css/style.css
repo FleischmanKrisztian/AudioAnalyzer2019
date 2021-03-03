@@ -171,7 +171,7 @@
   font-weight: 600;
   text-align: center;
   line-height: 100px;
-  color: #fff;
+  color: #000000;
   user-select: none;
   border-radius: 15px 15px 0 0;
   background: linear-gradient(-135deg, #c850c0, #4158d0);
@@ -245,7 +245,7 @@ form .content .pass-link{
   color: "";
 }
 form .field input[type="submit"]{
-  color: #fff;
+  color: #000000;
   border: none;
   padding-left: 0;
   margin-top: -10px;
@@ -716,15 +716,13 @@ h1{
 
 /* Tooltip */
 
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400');
-
 .mytooltip {
   position: relative;
   background: #e004e0;
   --mycolor: #04a2e0;
   padding: 5px 12px;
   margin: 5px;
-  width: 30px;
+  width: 300px;
   font-size: 30px;
   font-family: 'Maitree', serif;
   font-weight: bold;
@@ -736,6 +734,7 @@ h1{
 .mytooltip:before,
 .mytooltip:after {
   position: absolute;
+  width: 220px;
   content: '';
   opacity: 0;
   transition: all 0.4s ease;
