@@ -129,7 +129,12 @@ dmypy.json
 .pyre/
 *.wav
 pretrained_models/
+app/static/client/audiofiles/
+app/static/client/images/
+app/static/client/IncomingAudio/
 app/Models/__pycache__/
 __pycache__/
+__pycache__
+app/__pycache__
 app/__pycache__/
 *.pyc
