@@ -15,10 +15,10 @@ class Config(object):
     SPOTIFY_ID = os.environ["SPOTIFY_ID"]
     TESTING_PATH = "../app/static/client/IncomingAudio/"
     SPOTIFY_SECRET = os.environ["SPOTIFY_SECRET"]
-    UPLOAD_FOLDER = "../Flasklast/app/static/client/IncomingAudio/"
-    CLIENT_FILES = "../Flasklast/app/static/client/"
-    CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
-    CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
+    UPLOAD_FOLDER = "../app/static/client/IncomingAudio/"
+    CLIENT_FILES = "../app/static/client/"
+    CLIENT_AUDIOFILES = "../app/static/client/audiofiles/"
+    CLIENT_IMAGES = "../app/static/client/images/"
     CLIENT_AUDIO = "../app/static/client/audiofiles/"
     MONGO_URI = os.environ["SOUNRAVEL_MONGO_URI"]
   
