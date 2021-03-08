@@ -32,6 +32,7 @@ class Audiofile:
         wronglyformatedpath = os.path.join(application.config['UPLOAD_FOLDER'], self.namewithextension)
         self.path = wronglyformatedpath.replace('\\','/')
         doc = fileaswhole
+        print(os.getcwd())
         doc.save(self.path)
 
     # convert all filetypes to WAV format 
