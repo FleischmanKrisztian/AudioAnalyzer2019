@@ -33,7 +33,6 @@ def allowed_audio_filesize(filesize):
 
 @application.route("/")
 def index():
-      
     return render_template("public/index.html")
 
 @application.route("/sign-up", methods=["GET", "POST"])
