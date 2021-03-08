@@ -7,11 +7,11 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import spleeter
+# import spleeter
 import wave
 import librosa
 import librosa.display
-from spleeter.separator import Separator
+# from spleeter.separator import Separator
 from scipy import signal
 from scipy.io import wavfile
 import math
@@ -123,14 +123,14 @@ class Audiofile:
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
-    def separate_audiofile(self,numberOfStems):
-        file = self.path
-        if numberOfStems == 5:
-            separator = Separator('spleeter:5stems')
-        elif numberOfStems == 2:
-            separator = Separator('spleeter:2stems')
+    # def separate_audiofile(self,numberOfStems):
+    #     file = self.path
+    #     if numberOfStems == 5:
+    #         separator = Separator('spleeter:5stems')
+    #     elif numberOfStems == 2:
+    #         separator = Separator('spleeter:2stems')
 
-        separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
+        # separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
 
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
