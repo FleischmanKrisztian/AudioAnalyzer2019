@@ -33,6 +33,7 @@ class Audiofile:
         self.path = wronglyformatedpath.replace('\\','/')
         doc = fileaswhole
         print(os.getcwd())
+        print(self.path)
         doc.save(self.path)
 
     # convert all filetypes to WAV format 

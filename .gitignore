@@ -127,8 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-config.py
 *.wav
 pretrained_models/
 app/Models/__pycache__/
