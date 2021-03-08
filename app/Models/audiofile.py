@@ -35,7 +35,7 @@ class Audiofile:
         os.makedirs(application.config['TESTING_PATH'],exist_ok=True)
         doc.save(self.path)
 
-    # convert all filetypes to WAV format 
+    # convert all filetypes to WAV format
     def convert_audiofile(self):
         try:                    
             if not (".wav") in self.path:   
@@ -43,11 +43,13 @@ class Audiofile:
                     self.wavormp3 = False                     
                 src = AudioSegment.from_file(self.path)
                 dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
+                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
                 src.export(dst, format="wav")
                 os.remove(self.path)
                 self.path = dst
                 return "Goodconversion" , 200
             else:
+                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
                 dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
                 os.rename(self.path, dst)
                 self.path = dst
@@ -117,6 +119,7 @@ class Audiofile:
         plt.colorbar(format='%+2.0f dB')
         plt.title('Mel spectrogram')
         plt.tight_layout()
+        os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
@@ -176,6 +179,7 @@ class Audiofile:
         plt.title('Static tempo estimation')
         plt.legend(frameon=True)
         plt.axis('tight')
+        os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "tempo.png", dpi=72)
 
     def quality_spectrogram(self):
@@ -209,4 +213,5 @@ class Audiofile:
         plt.specgram(sound_info, Fs=frame_rate, cmap='gnuplot')
         cbar = plt.colorbar()
         cbar.ax.set_ylabel('dB')
+        os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "quality.png")

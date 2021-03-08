@@ -10,17 +10,17 @@ class Config(object):
     SECRET_KEY = os.environ["SECRET_KEY"]
     DB_NAME = "production-db"
     
-    #DEFAULT VARIABLES
     MAX_AUDIO_FILESIZE = 300000000
     SPOTIFY_ID = os.environ["SPOTIFY_ID"]
-    TESTING_PATH = "../app/static/client/IncomingAudio/"
     SPOTIFY_SECRET = os.environ["SPOTIFY_SECRET"]
-    UPLOAD_FOLDER = "../app/static/client/IncomingAudio/"
-    CLIENT_FILES = "../app/static/client/"
-    CLIENT_AUDIOFILES = "../app/static/client/audiofiles/"
-    CLIENT_IMAGES = "../app/static/client/images/"
-    CLIENT_AUDIO = "../app/static/client/audiofiles/"
     MONGO_URI = os.environ["SOUNRAVEL_MONGO_URI"]
+
+    TESTING_PATH = "../Flasklast/app/static/client/IncomingAudio/"
+    UPLOAD_FOLDER = "../app/static/client/IncomingAudio/"
+    CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
+    CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
+    CLIENT_AUDIO = "../app/static/client/audiofiles/"
+    
   
     #DATABASE
     application.config['MONGO_URI'] = MONGO_URI
@@ -31,11 +31,23 @@ class ProductionConfig(Config):
     DEBUG=False
     TESTING = False
 
+    TESTING_PATH = "../app/static/client/IncomingAudio/"
+    UPLOAD_FOLDER = "../app/static/client/IncomingAudio/"
+    CLIENT_AUDIOFILES = "../app/static/client/audiofiles/"
+    CLIENT_IMAGES = "../app/static/client/images/"
+    CLIENT_AUDIO = "../app/static/client/audiofiles/"
+
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
 class DevelopmentConfig(Config):
     DEBUG= False
     TESTING = False
+
+    TESTING_PATH = "../Flasklast/app/static/client/IncomingAudio/"
+    UPLOAD_FOLDER = "../Flasklast/app/static/client/IncomingAudio/"
+    CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
+    CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
+    CLIENT_AUDIO = "../app/static/client/audiofiles/"
 
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
