@@ -1,4 +1,6 @@
 from app import application
 
-if __name__ == "__main__":
+print ("app.pyBOL:")
+print (__name__)
+if __name__ == "app":
     application.run(debug=False)
