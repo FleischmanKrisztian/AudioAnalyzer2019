@@ -29,7 +29,7 @@ class Audiofile:
         self.numberofchannels = 0
         self.name = os.path.splitext(fileaswhole.filename)[0]
         self.wavormp3 = True
-        wronglyformatedpath = os.path.join(application.config['UPLOAD_FOLDER'], self.namewithextension)
+        wronglyformatedpath = os.path.join(application.config['TESTING_PATH'], self.namewithextension)
         self.path = wronglyformatedpath.replace('\\','/')
         doc = fileaswhole
         print(os.getcwd())
