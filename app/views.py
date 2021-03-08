@@ -123,8 +123,8 @@ def upload():
 
                 t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
                 t1.start()
-                t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
-                t2.start()
+                # t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
+                # t2.start()
                 t3 = threading.Thread(target=audiofile.channel_audiofile)
                 t3.start()
                 t1.join()
@@ -141,7 +141,7 @@ def upload():
                 t7.join()
                 t6.join()
                 t3.join()
-                t2.join()
+                # t2.join()
 
                 # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
                 # for thread in threading.enumerate():
