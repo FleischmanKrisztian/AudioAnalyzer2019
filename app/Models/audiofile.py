@@ -93,6 +93,7 @@ class Audiofile:
         plt.ylabel('Frequency (Hz)')
         for channel in deinterleaved:
             plt.plot(Time,channel, linewidth=.035)
+            os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
             plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "nice.png", dpi=72)
         
     # MEL SPECTROGRAM
@@ -130,7 +131,7 @@ class Audiofile:
 
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
-
+        os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "L.Wav", fs, data[:, 0])
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "R.Wav", fs, data[:, 1])
 
