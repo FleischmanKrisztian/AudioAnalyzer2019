@@ -13,6 +13,7 @@ class Config(object):
     #DEFAULT VARIABLES
     MAX_AUDIO_FILESIZE = 300000000
     SPOTIFY_ID = os.environ["SPOTIFY_ID"]
+    TESTING_PATH = "../app/static/client/IncomingAudio/"
     SPOTIFY_SECRET = os.environ["SPOTIFY_SECRET"]
     UPLOAD_FOLDER = "../Flasklast/app/static/client/IncomingAudio/"
     CLIENT_FILES = "../Flasklast/app/static/client/"
