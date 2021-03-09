@@ -128,7 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 *.wav
-pretrained_models/
 app/static/client/audiofiles/
 app/static/client/images/
 app/static/client/IncomingAudio/
