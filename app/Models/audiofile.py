@@ -1,5 +1,6 @@
 from app import application
 from flask import request
+from .DatabaseActions import incrementFilesUploaded
 from flask_pymongo import PyMongo
 import ffmpeg, pymongo, pydub, os, uuid, io, datetime
 from pydub import AudioSegment
@@ -52,6 +53,9 @@ class Audiofile:
             t5.join()    
             t6 = threading.Thread(target=self.quality_spectrogram)
             t6.start()
+            t7 = threading.Thread(target=incrementFilesUploaded,args=[request.cookies.get('email')])
+            t7.start()
+            t7.join()
             t6.join()
             t2.join()
 

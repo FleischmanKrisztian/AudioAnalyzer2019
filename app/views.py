@@ -90,10 +90,12 @@ def login():
     
     return render_template("public/login.html")
 
+import os
 @application.route("/getfile/<path:filename>")
 def getfile(filename):
     try:
-        return send_from_directory(application.config['CLIENT_AUDIO'],filename,as_attachment=True)
+        print(os.getcwd())
+        return send_from_directory(application.config['CLIENT_AUDIOFILES'],filename,as_attachment=True)
     except FileNotFoundError:
         abort(404)
 
