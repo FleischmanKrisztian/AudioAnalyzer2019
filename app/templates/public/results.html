@@ -50,6 +50,10 @@
 <img src="{{ url_for('static', filename='client/images/' + nameofsong + 'quality.png') }}" />
 <h1>MEL Spectrogram:<span class="mytooltip" data-tooltip="We converted the frequency to log scale and amplitude to dB">?</span></h1>
 <img src="{{ url_for('static', filename='client/images/' + nameofsong + 'mel.png') }}" />
+<img src="{{ url_for('app', filename='static/client/images/' + nameofsong + 'mel.png') }}" />
+<img src="'app/static/client/images' + nameofsong + 'mel.png' ">
+<img src="'static/client/images' + nameofsong + 'mel.png' ">
+
 <hr>
 <div id="spotifydiv" style="display: block;">
   <h1>Spotify Data:<span style="background:#6d06ce" class="mytooltip" data-tooltip="This data comes from spotify based on the name of the audiofile.">?</span></h1>
