@@ -52,6 +52,7 @@ class Audiofile:
             t7.start()
             t7.join()
             t6.join()
+            t3.join()
             return ("Audiofile analyzed succesfully!") ,200
         except:
             return ("There was an error whil analyzing!") ,401
