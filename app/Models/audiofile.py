@@ -39,8 +39,8 @@ class Audiofile:
     def generatedata(self):
             t1 = threading.Thread(target=self.spectrogram_audiofile)
             t1.start()
-            # t2 = threading.Thread(target=self.separate_audiofile,args=[2])
-            # t2.start()
+            t2 = threading.Thread(target=self.separate_audiofile,args=[2])
+            t2.start()
             t3 = threading.Thread(target=self.channel_audiofile)
             t3.start()
             t1.join()
@@ -56,7 +56,7 @@ class Audiofile:
             t7.start()
             t7.join()
             t6.join()
-            # t2.join()
+            t2.join()
 
             # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
             # for thread in threading.enumerate():
@@ -92,7 +92,7 @@ class Audiofile:
                 dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
                 os.rename(self.path, dst)
                 self.path = dst
-                return "The file was already in wav format!"                
+                return "The file was already in wav format!" , 200                
         except:
             "The conversion from your file type to Wav was unsuccessful!", 401
 
@@ -100,7 +100,6 @@ class Audiofile:
     def spectrogram_audiofile(self):
         file = self.path
         wav_file = wave.open(file,'r')
-
         signal = wav_file.readframes(-1)
         if wav_file.getsampwidth() == 1:
             signal = np.array(np.frombuffer(signal, dtype='UInt8')-128, dtype=np.int16)
@@ -192,7 +191,7 @@ class Audiofile:
             elif int(tempo2[0]) < int(tempo)*0.85:
                 different = True
         except:
-            print("An error has occured"), 401
+            return ("An error has occured"), 401
         tempo = np.asscalar(tempo)
         # Compute 2-second windowed autocorrelation
         hop_length = 512
