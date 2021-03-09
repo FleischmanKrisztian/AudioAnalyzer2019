@@ -52,9 +52,6 @@ class Audiofile:
             t5.join()    
             t6 = threading.Thread(target=self.quality_spectrogram)
             t6.start()
-            t7 = threading.Thread(target=self,args=[request.cookies.get('email')])
-            t7.start()
-            t7.join()
             t6.join()
             t2.join()
 

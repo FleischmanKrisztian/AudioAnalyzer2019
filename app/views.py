@@ -3,7 +3,7 @@ from app import spotifyapi
 from flask import session, send_from_directory, abort, render_template, request, redirect, make_response
 from functools import wraps
 from .Models.user import User
-from.Models.DatabaseActions import getuser, attributeFromJson, incrementFilesUploaded, add_to_db, loginFunction
+from .Models.DatabaseActions import getuser, attributeFromJson, incrementFilesUploaded, add_to_db, loginFunction
 from .Models.audiofile import Audiofile
 import json
 
@@ -106,6 +106,7 @@ def upload():
                 print("File exceeded maximum size")
                 return render_template("public/upload.html")
             else:
+                incrementFilesUploaded(request.cookies.get('email'))
                 audiofile = Audiofile()
                 audiofile.convert_audiofile()
                 id = spotifyapi.Get_id_of_song(audiofile.name)

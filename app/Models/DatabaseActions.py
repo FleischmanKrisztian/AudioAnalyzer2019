@@ -54,10 +54,14 @@ def start_session(user):
     return (user), 200
 
 def incrementFilesUploaded(email):
-    userAsJson = db.users.find_one({'email':email})
-    scannedFiles = int(userAsJson['scannedFiles'])
-    scannedFiles = scannedFiles + 1
-    userAsJson['scannedFiles'] = scannedFiles
-    update_user(userAsJson, email)
-    return userAsJson
+    try:
+        userAsJson = db.users.find_one({'email':email})
+        scannedFiles = int(userAsJson['scannedFiles'])
+        scannedFiles = scannedFiles + 1
+        userAsJson['scannedFiles'] = scannedFiles
+        update_user(userAsJson, email)
+        return ("Files uploaded incremented successfully!"), 200
+    except:
+        return ("Error getting email from cookie!"), 403
+    
 
