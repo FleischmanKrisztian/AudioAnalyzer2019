@@ -8,12 +8,10 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import spleeter
 import wave
 import librosa
 import librosa.display
 from spleeter.separator import Separator
-from scipy import signal
 from scipy.io import wavfile
 import math
 import os
@@ -41,8 +39,6 @@ class Audiofile:
         try:
             t1 = threading.Thread(target=self.spectrogram_audiofile)
             t1.start()
-            t2 = threading.Thread(target=self.separate_audiofile,args=[2])
-            t2.start()
             t3 = threading.Thread(target=self.channel_audiofile)
             t3.start()
             t1.join()
@@ -58,7 +54,6 @@ class Audiofile:
             t7.start()
             t7.join()
             t6.join()
-            t2.join()
             return ("Audiofile analyzed succesfully!") ,200
         except:
             return ("There was an error whil analyzing!") ,401
