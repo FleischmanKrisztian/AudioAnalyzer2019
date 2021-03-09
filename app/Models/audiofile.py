@@ -18,7 +18,6 @@ import os
 import sys
 import wave
 import threading
-import numpy as np
 import matplotlib.ticker as ticker
 import subprocess
 
