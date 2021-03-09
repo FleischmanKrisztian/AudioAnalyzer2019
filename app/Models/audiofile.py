@@ -38,6 +38,7 @@ class Audiofile:
         doc.save(self.path)
 
     def generatedata(self):
+        try:
             t1 = threading.Thread(target=self.spectrogram_audiofile)
             t1.start()
             t2 = threading.Thread(target=self.separate_audiofile,args=[2])
@@ -58,6 +59,9 @@ class Audiofile:
             t7.join()
             t6.join()
             t2.join()
+            return ("Audiofile analyzed succesfully!") ,200
+        except:
+            return ("There was an error whil analyzing!") ,401
 
             # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
             # for thread in threading.enumerate():

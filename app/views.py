@@ -68,7 +68,6 @@ def profile():
 
 @application.route("/results")
 def results(audioname="nofileprovided"):
-    print(audioname)
     return render_template("public/results.html", nameofsong = audioname)
 
 @application.route("/signout")
@@ -90,11 +89,9 @@ def login():
     
     return render_template("public/login.html")
 
-import os
 @application.route("/getfile/<path:filename>")
 def getfile(filename):
     try:
-        print(os.getcwd())
         return send_from_directory(application.config['CLIENT_AUDIOFILES'],filename,as_attachment=True)
     except FileNotFoundError:
         abort(404)
@@ -122,8 +119,9 @@ def upload():
                     tempo = "No song was found on spotify"
                     key = "No song was found on spotify"
                     existsonspotify = False
+                
+                audiofile.generatedata()
 
-                audiofile.generatedata()                   
                     
         return render_template("public/results.html",nameofsong=audiofile.name, numberofchannels = audiofile.numberofchannels, keyofsong=key, tempoofsong=tempo, idofsong = id[0], existsonspotify = existsonspotify)  
     return render_template("public/upload.html")
