@@ -179,8 +179,6 @@ class Audiofile:
         plt.title('Static tempo estimation')
         plt.legend(frameon=True)
         plt.axis('tight')
-        print(os.curdir)
-        print(os.getcwdb)
         os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "tempo.png", dpi=72)
 
