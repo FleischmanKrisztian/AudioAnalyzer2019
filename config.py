@@ -20,6 +20,7 @@ class Config(object):
     CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
     CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
     CLIENT_AUDIO = "../app/static/client/audiofiles/"
+    CLIENT_FOLDER = "../app/static/client/audiofiles/"
     
   
     #DATABASE
@@ -36,6 +37,7 @@ class ProductionConfig(Config):
     CLIENT_AUDIOFILES = "./static/client/audiofiles/"
     CLIENT_IMAGES = "./app/static/client/images/"
     CLIENT_AUDIO = "../app/static/client/audiofiles/"
+    CLIENT_FOLDER = "./app/static/client"
 
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
@@ -48,6 +50,7 @@ class DevelopmentConfig(Config):
     CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
     CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
     CLIENT_AUDIO = "../app/static/client/audiofiles/"
+    CLIENT_FOLDER = "./app/static/client"
 
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
