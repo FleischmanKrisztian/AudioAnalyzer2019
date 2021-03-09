@@ -47,11 +47,11 @@ def sign_up():
             return render_template("public/sign_up.html")
 
     return render_template("public/sign_up.html")
-import shutil
+# import shutil
 
 @application.route("/about")
 def about():
-    shutil.rmtree(path=application.config["CLIENT_FOLDER"])
+    # shutil.rmtree(path=application.config["CLIENT_FOLDER"])
     return render_template("public/about.html")
 
 @application.route("/profile")
