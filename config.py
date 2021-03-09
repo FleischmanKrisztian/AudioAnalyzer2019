@@ -31,11 +31,11 @@ class ProductionConfig(Config):
     DEBUG=False
     TESTING = False
 
-    TESTING_PATH = "../app/static/client/IncomingAudio/"
-    UPLOAD_FOLDER = "../app/static/client/IncomingAudio/"
-    CLIENT_AUDIOFILES = "../app/static/client/audiofiles/"
-    CLIENT_IMAGES = "../app/static/client/images/"
-    CLIENT_AUDIO = "../app/static/client/audiofiles/"
+    TESTING_PATH = "./app/static/client/IncomingAudio/"
+    UPLOAD_FOLDER = "./app/static/client/IncomingAudio/"
+    CLIENT_AUDIOFILES = "./app/static/client/audiofiles/"
+    CLIENT_IMAGES = "./app/static/client/images/"
+    CLIENT_AUDIO = "./app/static/client/audiofiles/"
 
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
