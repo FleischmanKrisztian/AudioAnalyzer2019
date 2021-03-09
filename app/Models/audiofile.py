@@ -2,7 +2,7 @@ from app import application
 from flask import request
 from .DatabaseActions import incrementFilesUploaded
 from flask_pymongo import PyMongo
-import ffmpeg, pymongo, pydub, os, uuid, io, datetime
+import pymongo, pydub, os, uuid, io, datetime
 from pydub import AudioSegment
 import matplotlib
 matplotlib.use('Agg')
@@ -11,7 +11,6 @@ import numpy as np
 import wave
 import librosa
 import librosa.display
-from spleeter.separator import Separator
 from scipy.io import wavfile
 import math
 import os
