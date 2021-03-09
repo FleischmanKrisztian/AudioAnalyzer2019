@@ -167,7 +167,7 @@ class Audiofile:
             separator = Separator('spleeter:5stems')
         elif numberOfStems == 2:
             separator = Separator('spleeter:2stems')
-
+        os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
         separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
 
     def channel_audiofile(self):
