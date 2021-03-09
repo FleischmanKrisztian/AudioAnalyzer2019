@@ -1,7 +1,7 @@
 from app import application
 from flask import request
 from flask_pymongo import PyMongo
-import pyAudioAnalysis , ffmpeg, pymongo, pydub, os, uuid, io, datetime
+import ffmpeg, pymongo, pydub, os, uuid, io, datetime
 from pydub import AudioSegment
 import matplotlib
 matplotlib.use('Agg')
