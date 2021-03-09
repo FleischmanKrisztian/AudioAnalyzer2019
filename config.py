@@ -33,7 +33,7 @@ class ProductionConfig(Config):
 
     TESTING_PATH = "./app/static/client/IncomingAudio/"
     UPLOAD_FOLDER = "./app/static/client/IncomingAudio/"
-    CLIENT_AUDIOFILES = "./app/static/client/audiofiles/"
+    CLIENT_AUDIOFILES = "./static/client/audiofiles/"
     CLIENT_IMAGES = "./app/static/client/images/"
     CLIENT_AUDIO = "../app/static/client/audiofiles/"
 
