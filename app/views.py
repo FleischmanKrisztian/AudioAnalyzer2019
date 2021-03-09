@@ -6,7 +6,6 @@ from .Models.user import User
 from.Models.DatabaseActions import getuser, attributeFromJson, incrementFilesUploaded, add_to_db, loginFunction
 from .Models.audiofile import Audiofile
 import json
-import threading
 
 #Decorators
 def login_required(f):
@@ -109,7 +108,7 @@ def upload():
             else:
                 audiofile = Audiofile()
                 audiofile.convert_audiofile()
-                id = spotifyapi.idOfSong(audiofile.name)
+                id = spotifyapi.Get_id_of_song(audiofile.name)
                 if Filefound(id):
                     tempo = (spotifyapi.tempo_of_id(id[0]))
                     key = (spotifyapi.key_of_id(id[0]))
@@ -121,43 +120,7 @@ def upload():
                     key = "No song was found on spotify"
                     existsonspotify = False
 
-                t1 = threading.Thread(target=audiofile.spectrogram_audiofile)
-                t1.start()
-                # t2 = threading.Thread(target=audiofile.separate_audiofile,args=[2])
-                # t2.start()
-                # t3 = threading.Thread(target=audiofile.channel_audiofile)
-                # t3.start()
-                t1.join()
-                t4 = threading.Thread(target=audiofile.librosa_spectrogram)
-                t4.start()
-                t4.join()
-                t5 = threading.Thread(target=audiofile.tempo_graph)
-                t5.start()
-                t5.join()    
-                t6 = threading.Thread(target=audiofile.quality_spectrogram)
-                t6.start()
-                # t7 = threading.Thread(target=incrementFilesUploaded,args=[request.cookies.get('email')])
-                # t7.start()
-                # t7.join()
-                t6.join()
-                # t3.join()
-                # t2.join()
-
-                # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
-                # for thread in threading.enumerate():
-                #     print(thread.name)
-
-                # for thread in threading.enumerate():
-                #     threadstr = str(thread.name)
-                #     if threadstr.find('Thread-') != -1:
-                #         number = threadstr[7:9]
-                #         if int(number) != 1:
-                #             # thread.join()
-                            
-                #             print("Ezt kitorolnem")
-
-                # for thread in threading.enumerate():
-                #     print(thread.name)                      
+                audiofile.generatedata()                   
                     
         return render_template("public/results.html",nameofsong=audiofile.name, numberofchannels = audiofile.numberofchannels, keyofsong=key, tempoofsong=tempo, idofsong = id[0], existsonspotify = existsonspotify)  
     return render_template("public/upload.html")

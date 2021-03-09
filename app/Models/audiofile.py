@@ -18,6 +18,7 @@ import math
 import os
 import sys
 import wave
+import threading
 import numpy as np
 import matplotlib.ticker as ticker
 import subprocess
@@ -34,6 +35,44 @@ class Audiofile:
         doc = fileaswhole
         os.makedirs(application.config['TESTING_PATH'],exist_ok=True)
         doc.save(self.path)
+
+    def generatedata(self):
+            t1 = threading.Thread(target=self.spectrogram_audiofile)
+            t1.start()
+            # t2 = threading.Thread(target=self.separate_audiofile,args=[2])
+            # t2.start()
+            t3 = threading.Thread(target=self.channel_audiofile)
+            t3.start()
+            t1.join()
+            t4 = threading.Thread(target=self.librosa_spectrogram)
+            t4.start()
+            t4.join()
+            t5 = threading.Thread(target=self.tempo_graph)
+            t5.start()
+            t5.join()    
+            t6 = threading.Thread(target=self.quality_spectrogram)
+            t6.start()
+            t7 = threading.Thread(target=self,args=[request.cookies.get('email')])
+            t7.start()
+            t7.join()
+            t6.join()
+            # t2.join()
+
+            # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
+            # for thread in threading.enumerate():
+            #     print(thread.name)
+
+            # for thread in threading.enumerate():
+            #     threadstr = str(thread.name)
+            #     if threadstr.find('Thread-') != -1:
+            #         number = threadstr[7:9]
+            #         if int(number) != 1:
+            #             # thread.join()
+                        
+            #             print("Ezt kitorolnem")
+
+            # for thread in threading.enumerate():
+            #     print(thread.name)   
 
     # convert all filetypes to WAV format
     def convert_audiofile(self):

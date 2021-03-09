@@ -35,7 +35,7 @@ class ProductionConfig(Config):
     UPLOAD_FOLDER = "./app/static/client/IncomingAudio/"
     CLIENT_AUDIOFILES = "./app/static/client/audiofiles/"
     CLIENT_IMAGES = "./app/static/client/images/"
-    CLIENT_AUDIO = "./app/static/client/audiofiles/"
+    CLIENT_AUDIO = "../app/static/client/audiofiles/"
 
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
