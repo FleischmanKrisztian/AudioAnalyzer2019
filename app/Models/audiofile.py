@@ -159,13 +159,13 @@ class Audiofile:
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
-    def separate_audiofile(self,numberOfStems):
-        if numberOfStems == 5:
-            separator = Separator('spleeter:5stems')
-        elif numberOfStems == 2:
-            separator = Separator('spleeter:2stems')
-        os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
-        separator.separate_to_file(self.path, application.config['CLIENT_AUDIOFILES'])
+    # def separate_audiofile(self,numberOfStems):
+    #     if numberOfStems == 5:
+    #         separator = Separator('spleeter:5stems')
+    #     elif numberOfStems == 2:
+    #         separator = Separator('spleeter:2stems')
+    #     os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
+    #     separator.separate_to_file(self.path, application.config['CLIENT_AUDIOFILES'])
 
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)

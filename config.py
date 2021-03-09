@@ -42,12 +42,12 @@ class ProductionConfig(Config):
     client = pymongo.MongoClient(application.config['MONGO_URI'])
 
 class DevelopmentConfig(Config):
-    DEBUG= False
+    DEBUG= True
     TESTING = False
 
     TESTING_PATH = "../Flasklast/app/static/client/IncomingAudio/"
     UPLOAD_FOLDER = "../Flasklast/app/static/client/IncomingAudio/"
-    CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
+    CLIENT_AUDIOFILES = "./app/static/client/audiofiles/"
     CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
     CLIENT_AUDIO = "../app/static/client/audiofiles/"
     CLIENT_FOLDER = "./app/static/client"

@@ -94,7 +94,7 @@ def login():
 @application.route("/getfile/<path:filename>")
 def getfile(filename):
     try:
-        return send_from_directory(application.config['CLIENT_AUDIOFILES'],filename,as_attachment=True)
+        return send_from_directory(application.config['CLIENT_AUDIO'],filename,as_attachment=True)
     except FileNotFoundError:
         abort(404)
 
