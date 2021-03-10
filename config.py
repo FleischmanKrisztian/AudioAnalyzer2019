@@ -7,7 +7,6 @@ class Config(object):
     DEBUG= False
     TESTING = False
 
-    SECRET_KEY = os.environ["SECRET_KEY"]
     DB_NAME = "production-db"
     
     MAX_AUDIO_FILESIZE = 300000000
