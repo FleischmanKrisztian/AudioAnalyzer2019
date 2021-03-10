@@ -20,8 +20,8 @@ TODO: Fix spleeter crashes.
 STARTING THE APPLICATION:
 
 Add the following ENV Variables:
-SECRET_KEY = <insert a random string>
-SOUNRAVEL_MONGO_URI = <https://www.mongodb.com/cloud/atlas (FREE) and just link it>
+SECRET_KEY = (insert a random string)
+SOUNRAVEL_MONGO_URI = https://www.mongodb.com/cloud/atlas (Create a free Mongo cluster and link to it)
 SPOTIFY_ID = https://developer.spotify.com/documentation/general/guides/app-settings/
 SPOTIFY_SECRET = https://developer.spotify.com/documentation/general/guides/app-settings/
 
