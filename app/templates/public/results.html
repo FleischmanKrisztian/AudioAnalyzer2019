@@ -60,16 +60,19 @@
   <h2>For additional info provided by spotify head over to <a style="color: darkblue;" href="https://musicstax.com">Musicstax - Music Analysis</a></h2>
   <hr>
 </div>
-<h1>Channels:<span style="background:#6d06ce" class="mytooltip" data-tooltip="The two channels of the file separated into left and right channels.">?</span></h1>
 <div id="channeldiv" style="display: block;">
+<h1>Channels:<span style="background:#6d06ce" class="mytooltip" data-tooltip="The two channels of the file separated into left and right channels.">?</span></h1>
   <button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}L.Wav'">Left Channel</button>
   <button class="big-button" onclick="location.href='/getfile/{{ nameofsong }}R.Wav'">Right Channel</button>
-</div>
+<br>
 <br>
 <hr>
-<h1>Separations:<span style="background:#6d06ce"  class="mytooltip" data-tooltip="Separated files using Machine Learning.">?</span></h1>
-<button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/accompaniment.Wav'">Instrumental</button>
-<button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/vocals.Wav'">Vocals</button>
+</div>
+<div>
+  <h1>Separations:<span style="background:#6d06ce"  class="mytooltip" data-tooltip="Separated files using Machine Learning.">?</span></h1>
+  <button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/accompaniment.Wav'">Instrumental</button>
+  <button class="big-button" onclick="location.href='/getfile/{{nameofsong}}/vocals.Wav'">Vocals</button>
+</div>
 <br>
 <br>
 <br>

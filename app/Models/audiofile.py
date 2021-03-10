@@ -1,24 +1,24 @@
 from app import application
 from flask import request
+from .DatabaseActions import incrementFilesUploaded
 from flask_pymongo import PyMongo
-import pyAudioAnalysis , ffmpeg, pymongo, pydub, os, uuid, io, datetime
+import pymongo, pydub, os, uuid, io, datetime
 from pydub import AudioSegment
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-import spleeter
 import wave
+import spleeter
+from spleeter.separator import Separator
 import librosa
 import librosa.display
-from spleeter.separator import Separator
-from scipy import signal
 from scipy.io import wavfile
 import math
 import os
 import sys
 import wave
-import numpy as np
+import threading
 import matplotlib.ticker as ticker
 import subprocess
 
@@ -29,12 +29,65 @@ class Audiofile:
         self.numberofchannels = 0
         self.name = os.path.splitext(fileaswhole.filename)[0]
         self.wavormp3 = True
-        wronglyformatedpath = os.path.join(application.config['UPLOAD_FOLDER'], self.namewithextension)
+        wronglyformatedpath = os.path.join(application.config['TESTING_PATH'], self.namewithextension)
         self.path = wronglyformatedpath.replace('\\','/')
         doc = fileaswhole
+        os.makedirs(application.config['TESTING_PATH'],exist_ok=True)
         doc.save(self.path)
 
-    # convert all filetypes to WAV format 
+    def generatedata(self):
+        try:
+            t1 = threading.Thread(target=self.spectrogram_audiofile)
+            t1.start()
+            t2 = threading.Thread(target=self.separate_audiofile,args=[2])
+            t2.start()
+            t3 = threading.Thread(target=self.channel_audiofile)
+            t3.start()
+            t1.join()
+            t4 = threading.Thread(target=self.librosa_spectrogram)
+            t4.start()
+            t4.join()
+            t5 = threading.Thread(target=self.tempo_graph)
+            t5.start()
+            t5.join()    
+            t6 = threading.Thread(target=self.quality_spectrogram)
+            t6.start()
+            t7 = threading.Thread(target=incrementFilesUploaded,args=[request.cookies.get('email')])
+            t7.start()
+            t7.join()
+            t6.join()
+            t3.join()
+            t2.join()
+            return ("Audiofile analyzed succesfully!") ,200
+        except:
+            return ("There was an error while analyzing!") ,401
+
+    # instrumental/vocal Separator
+    def separate_audiofile(self,numberOfStems):
+        file = self.path
+        if numberOfStems == 5:
+            separator = Separator('spleeter:5stems')
+        elif numberOfStems == 2:
+            separator = Separator('spleeter:2stems')
+
+        separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
+            # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
+            # for thread in threading.enumerate():
+            #     print(thread.name)
+
+            # for thread in threading.enumerate():
+            #     threadstr = str(thread.name)
+            #     if threadstr.find('Thread-') != -1:
+            #         number = threadstr[7:9]
+            #         if int(number) != 1:
+            #             # thread.join()
+                        
+            #             print("Ezt kitorolnem")
+
+            # for thread in threading.enumerate():
+            #     print(thread.name)   
+
+    # convert all filetypes to WAV format
     def convert_audiofile(self):
         try:                    
             if not (".wav") in self.path:   
@@ -42,15 +95,17 @@ class Audiofile:
                     self.wavormp3 = False                     
                 src = AudioSegment.from_file(self.path)
                 dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
+                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
                 src.export(dst, format="wav")
                 os.remove(self.path)
                 self.path = dst
                 return "Goodconversion" , 200
             else:
+                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
                 dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
                 os.rename(self.path, dst)
                 self.path = dst
-                return "The file was already in wav format!"                
+                return "The file was already in wav format!" , 200                
         except:
             "The conversion from your file type to Wav was unsuccessful!", 401
 
@@ -58,7 +113,6 @@ class Audiofile:
     def spectrogram_audiofile(self):
         file = self.path
         wav_file = wave.open(file,'r')
-
         signal = wav_file.readframes(-1)
         if wav_file.getsampwidth() == 1:
             signal = np.array(np.frombuffer(signal, dtype='UInt8')-128, dtype=np.int16)
@@ -92,6 +146,7 @@ class Audiofile:
         plt.ylabel('Frequency (Hz)')
         for channel in deinterleaved:
             plt.plot(Time,channel, linewidth=.035)
+            os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
             plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "nice.png", dpi=72)
         
     # MEL SPECTROGRAM
@@ -115,21 +170,21 @@ class Audiofile:
         plt.colorbar(format='%+2.0f dB')
         plt.title('Mel spectrogram')
         plt.tight_layout()
+        os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
-    def separate_audiofile(self,numberOfStems):
-        file = self.path
-        if numberOfStems == 5:
-            separator = Separator('spleeter:5stems')
-        elif numberOfStems == 2:
-            separator = Separator('spleeter:2stems')
-
-        separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
+    # def separate_audiofile(self,numberOfStems):
+    #     if numberOfStems == 5:
+    #         separator = Separator('spleeter:5stems')
+    #     elif numberOfStems == 2:
+    #         separator = Separator('spleeter:2stems')
+    #     os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
+    #     separator.separate_to_file(self.path, application.config['CLIENT_AUDIOFILES'])
 
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
-
+        os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "L.Wav", fs, data[:, 0])
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "R.Wav", fs, data[:, 1])
 
@@ -148,7 +203,7 @@ class Audiofile:
             elif int(tempo2[0]) < int(tempo)*0.85:
                 different = True
         except:
-            print("An error has occured"), 401
+            return ("An error has occured"), 401
         tempo = np.asscalar(tempo)
         # Compute 2-second windowed autocorrelation
         hop_length = 512
@@ -174,6 +229,7 @@ class Audiofile:
         plt.title('Static tempo estimation')
         plt.legend(frameon=True)
         plt.axis('tight')
+        os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "tempo.png", dpi=72)
 
     def quality_spectrogram(self):
@@ -207,4 +263,5 @@ class Audiofile:
         plt.specgram(sound_info, Fs=frame_rate, cmap='gnuplot')
         cbar = plt.colorbar()
         cbar.ax.set_ylabel('dB')
+        os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "quality.png")

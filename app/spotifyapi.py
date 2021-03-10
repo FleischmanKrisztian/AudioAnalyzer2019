@@ -10,7 +10,7 @@ secret = application.config["SPOTIFY_SECRET"]
 client_credentials_manager = SpotifyClientCredentials(client_id=cid, client_secret=secret)
 sp = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
 
-def idOfSong(search_str):
+def Get_id_of_song(search_str):
     try:
         search_str = search_str.replace('_',' ')
         search_str = ''.join([i for i in search_str if not i.isdigit()])
