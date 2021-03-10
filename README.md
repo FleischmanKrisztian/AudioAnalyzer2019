@@ -4,7 +4,7 @@ My Thesis Project
 This is an application for analyzing audiofiles, It is able to provide spectrograms and tempographs of songs, and get spotify data based on the name of the file,
 It is also able to separate the file into two different wave files if it contains 2 channels, It uses spleeter and tensorflow to separate the vocals from the accompaniement.
 
-The Heroku branch is used for deploying the application on the web at: sounravel.herokuapp.com
+The Heroku branch is used for deploying the application on the web at: https://sounravel.herokuapp.com
 It can currently analyze files up to 40 seconds long, 
 However this does not contain the file separator functionality due to this using a lot of memory and currently only owning a free account of Heroku.
 Heroku times out after 30 seconds, which is a problem because analyzing 3-4 minute wavfiles takes longer especially if it has 2 channels
