@@ -9,6 +9,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import wave
+import spleeter
+from spleeter.separator import Separator
 import librosa
 import librosa.display
 from scipy.io import wavfile
@@ -37,6 +39,8 @@ class Audiofile:
         try:
             t1 = threading.Thread(target=self.spectrogram_audiofile)
             t1.start()
+            t2 = threading.Thread(target=self.separate_audiofile,args=[2])
+            t2.start()
             t3 = threading.Thread(target=self.channel_audiofile)
             t3.start()
             t1.join()
@@ -53,10 +57,20 @@ class Audiofile:
             t7.join()
             t6.join()
             t3.join()
+            t2.join()
             return ("Audiofile analyzed succesfully!") ,200
         except:
-            return ("There was an error whil analyzing!") ,401
+            return ("There was an error while analyzing!") ,401
 
+    # instrumental/vocal Separator
+    def separate_audiofile(self,numberOfStems):
+        file = self.path
+        if numberOfStems == 5:
+            separator = Separator('spleeter:5stems')
+        elif numberOfStems == 2:
+            separator = Separator('spleeter:2stems')
+
+        separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
             # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
             # for thread in threading.enumerate():
             #     print(thread.name)

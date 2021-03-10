@@ -15,12 +15,12 @@ class Config(object):
     SPOTIFY_SECRET = os.environ["SPOTIFY_SECRET"]
     MONGO_URI = os.environ["SOUNRAVEL_MONGO_URI"]
 
-    TESTING_PATH = "../Flasklast/app/static/client/IncomingAudio/"
-    UPLOAD_FOLDER = "../app/static/client/IncomingAudio/"
-    CLIENT_AUDIOFILES = "../Flasklast/app/static/client/audiofiles/"
-    CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
-    CLIENT_AUDIO = "../app/static/client/audiofiles/"
-    CLIENT_FOLDER = "../app/static/client/audiofiles/"
+    TESTING_PATH = "./app/static/client/IncomingAudio/"
+    UPLOAD_FOLDER = "./app/static/client/IncomingAudio/"
+    CLIENT_AUDIOFILES = "./app/static/client/audiofiles/"
+    CLIENT_IMAGES = "./app/static/client/images/"
+    CLIENT_AUDIO = "./app/static/client/audiofiles/"
+    CLIENT_FOLDER = "./app/static/client/audiofiles/"
     
   
     #DATABASE
@@ -45,11 +45,11 @@ class DevelopmentConfig(Config):
     DEBUG= True
     TESTING = False
 
-    TESTING_PATH = "../Flasklast/app/static/client/IncomingAudio/"
-    UPLOAD_FOLDER = "../Flasklast/app/static/client/IncomingAudio/"
+    TESTING_PATH = "./app/static/client/IncomingAudio/"
+    UPLOAD_FOLDER = "./app/static/client/IncomingAudio/"
     CLIENT_AUDIOFILES = "./app/static/client/audiofiles/"
-    CLIENT_IMAGES = "../Flasklast/app/static/client/images/"
-    CLIENT_AUDIO = "../app/static/client/audiofiles/"
+    CLIENT_IMAGES = "./app/static/client/images/"
+    CLIENT_AUDIO = "./static/client/audiofiles/"
     CLIENT_FOLDER = "./app/static/client"
 
     client = pymongo.MongoClient(application.config['MONGO_URI'])
