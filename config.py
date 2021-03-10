@@ -10,6 +10,7 @@ class Config(object):
     DB_NAME = "production-db"
     
     MAX_AUDIO_FILESIZE = 300000000
+    SECRET_KEY = os.environ["SECRET_KEY"]
     SPOTIFY_ID = os.environ["SPOTIFY_ID"]
     SPOTIFY_SECRET = os.environ["SPOTIFY_SECRET"]
     MONGO_URI = os.environ["SOUNRAVEL_MONGO_URI"]
