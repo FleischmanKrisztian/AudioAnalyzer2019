@@ -7,12 +7,12 @@
 <h1 style="text-align: center;">Upload</h1>
 <hr>
 
-<form action="/upload" enctype="multipart/form-data" method="POST">
+<form action="/upload"  onsubmit="addloader();" enctype="multipart/form-data" method="POST">
   <div class="newform">
-    <input oninput="filesize(this);" single type="file" accept="audio/*" class="form-control" id="audiofile" name="audiofile">
+    <input oninput="filesize(this);" single type="file" accept="audio/*" class="form-control" id="audiofile" required name="audiofile">
       <p>Drag your file here or click in this area.</p>
       <br>
-      <button onclick="addloader();" type="submit">Upload</button>
+      <button type="submit">Upload</button>
   </div>
 </form>
 
