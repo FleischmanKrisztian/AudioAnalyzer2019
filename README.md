@@ -25,9 +25,9 @@ Add the following ENV Variables:
 - SPOTIFY_ID = https://developer.spotify.com/documentation/general/guides/app-settings/
 - SPOTIFY_SECRET = https://developer.spotify.com/documentation/general/guides/app-settings/
 
-Install requirements with: <pip install -r /path/to/requirements.txt>
+Install requirements with: pip install -r /path/to/requirements.txt
 
-Start application with: <python app.py>
+Start application with: python app.py
 
 FUTURE ACTIVITY:
 - Checkbox for what the user wants for speeding up application if not every detail is needed
