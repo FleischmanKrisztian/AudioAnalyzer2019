@@ -63,22 +63,6 @@ class Audiofile:
         except:
             return ("There was an error whil analyzing!") ,401
 
-            # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
-            # for thread in threading.enumerate():
-            #     print(thread.name)
-
-            # for thread in threading.enumerate():
-            #     threadstr = str(thread.name)
-            #     if threadstr.find('Thread-') != -1:
-            #         number = threadstr[7:9]
-            #         if int(number) != 1:
-            #             # thread.join()
-                        
-            #             print("Ezt kitorolnem")
-
-            # for thread in threading.enumerate():
-            #     print(thread.name)   
-
     # convert all filetypes to WAV format
     def convert_audiofile(self):
         try:                    
@@ -117,7 +101,6 @@ class Audiofile:
         numberofchannels = wav_file.getnchannels()
         self.numberofchannels = numberofchannels
 
-        # http://schlameel.com/2017/06/09/interleaving-and-de-interleaving-data-with-python/
         deinterleaved = [signal[idx::numberofchannels] for idx in range(numberofchannels)]
 
         #Get time from indices
