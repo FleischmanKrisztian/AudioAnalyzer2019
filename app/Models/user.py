@@ -10,7 +10,6 @@ client = pymongo.MongoClient(application.config["MONGO_URI"])
 db = client.Users
 
 class User:
-    #create a user with info from signup and ecrypting the password field
     def __init__(self):
         id = uuid.uuid4().hex
         self._id = id

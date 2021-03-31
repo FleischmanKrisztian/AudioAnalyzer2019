@@ -1,6 +1,6 @@
 from app import application
 from flask import request
-from .DatabaseActions import incrementFilesUploaded
+from app.Modules import DatabaseActions
 from flask_pymongo import PyMongo
 import pymongo, pydub, os, uuid, io, datetime
 from pydub import AudioSegment
@@ -24,16 +24,22 @@ import subprocess
 
 class Audiofile:
     def __init__(self):
-        fileaswhole = request.files["audiofile"]
-        self.namewithextension = fileaswhole.filename
+        self.fileaswhole = request.files["audiofile"]
+        self.namewithextension = self.fileaswhole.filename
         self.numberofchannels = 0
-        self.name = os.path.splitext(fileaswhole.filename)[0]
+        self.name = os.path.splitext(self.fileaswhole.filename)[0]
         self.wavormp3 = True
-        wronglyformatedpath = os.path.join(application.config['TESTING_PATH'], self.namewithextension)
-        self.path = wronglyformatedpath.replace('\\','/')
-        doc = fileaswhole
-        os.makedirs(application.config['TESTING_PATH'],exist_ok=True)
-        doc.save(self.path)
+        self.path = os.path.join(application.config['TESTING_PATH'], self.namewithextension)
+
+    def savetofolder(self):
+        try:
+            self.path = self.path.replace('\\','/')
+            doc = self.fileaswhole
+            os.makedirs(application.config['TESTING_PATH'],exist_ok=True)
+            doc.save(self.path)
+            return ("Audiofile analyzed succesfully!") ,200
+        except:
+            return ("There was an error while analyzing!") ,401
 
     def generatedata(self):
         try:
@@ -52,7 +58,7 @@ class Audiofile:
             t5.join()    
             t6 = threading.Thread(target=self.quality_spectrogram)
             t6.start()
-            t7 = threading.Thread(target=incrementFilesUploaded,args=[request.cookies.get('email')])
+            t7 = threading.Thread(target=DatabaseActions.incrementFilesUploaded,args=[request.cookies.get('email')])
             t7.start()
             t7.join()
             t6.join()
