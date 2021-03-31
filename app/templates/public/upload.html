@@ -6,7 +6,6 @@
 
 <h1 style="text-align: center;">Upload</h1>
 <hr>
-
 <form action="/upload"  onsubmit="addloader();" enctype="multipart/form-data" method="POST">
   <div class="newform">
     <input oninput="filesize(this);" single type="file" accept="audio/*" class="form-control" id="audiofile" required name="audiofile">
@@ -15,7 +14,6 @@
       <button type="submit">Upload</button>
   </div>
 </form>
-
 <div id="loaderdiv" class="loader-wrapper" style="display: none;">
   <span class="loader"><span class="loader-inner"></span></span>
 </div>

@@ -62,15 +62,6 @@ class Audiofile:
         except:
             return ("There was an error while analyzing!") ,401
 
-    # instrumental/vocal Separator
-    def separate_audiofile(self,numberOfStems):
-        file = self.path
-        if numberOfStems == 5:
-            separator = Separator('spleeter:5stems')
-        elif numberOfStems == 2:
-            separator = Separator('spleeter:2stems')
-
-        separator.separate_to_file(file, application.config['CLIENT_AUDIOFILES'])
             # The spleeter thread leaves behind alien threads which i could not get to delete and after 5-6 audiofiles the application runs out of memory and crashes the whole PC
             # for thread in threading.enumerate():
             #     print(thread.name)
@@ -125,13 +116,11 @@ class Audiofile:
         numberofchannels = wav_file.getnchannels()
         self.numberofchannels = numberofchannels
 
-        # http://schlameel.com/2017/06/09/interleaving-and-de-interleaving-data-with-python/
         deinterleaved = [signal[idx::numberofchannels] for idx in range(numberofchannels)]
 
         #Get time from indices
         fs = wav_file.getframerate()
         Time=np.linspace(0, round(len(signal)/numberofchannels/fs), round(len(signal)/numberofchannels))
-        #Plot
         plt.figure(figsize=(10, 4))
         plt.rcParams['axes.facecolor'] = 'black'
         plt.rcParams['savefig.facecolor'] = 'black'
@@ -174,20 +163,22 @@ class Audiofile:
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
-    # def separate_audiofile(self,numberOfStems):
-    #     if numberOfStems == 5:
-    #         separator = Separator('spleeter:5stems')
-    #     elif numberOfStems == 2:
-    #         separator = Separator('spleeter:2stems')
-    #     os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
-    #     separator.separate_to_file(self.path, application.config['CLIENT_AUDIOFILES'])
-
+    def separate_audiofile(self,numberOfStems):
+        if numberOfStems == 5:
+            separator = Separator('spleeter:5stems')
+        elif numberOfStems == 2:
+            separator = Separator('spleeter:2stems')
+        os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
+        separator.separate_to_file(self.path, application.config['CLIENT_AUDIOFILES'])
+    
+    # channel separator
     def channel_audiofile(self):
         fs, data = wavfile.read(self.path)
         os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "L.Wav", fs, data[:, 0])
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "R.Wav", fs, data[:, 1])
 
+    # Tempogram
     def tempo_graph(self):
             
         y, sr = librosa.load(self.path)
@@ -232,6 +223,7 @@ class Audiofile:
         os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "tempo.png", dpi=72)
 
+    #Quality Spectrogram
     def quality_spectrogram(self):
         wavname=self.path
         wav = wave.open(wavname, 'r')  

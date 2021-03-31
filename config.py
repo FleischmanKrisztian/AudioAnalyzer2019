@@ -9,7 +9,7 @@ class Config(object):
 
     DB_NAME = "production-db"
     
-    MAX_AUDIO_FILESIZE = 300000000
+    MAX_AUDIO_FILESIZE = 30000000
     SECRET_KEY = os.environ["SECRET_KEY"]
     SPOTIFY_ID = os.environ["SPOTIFY_ID"]
     SPOTIFY_SECRET = os.environ["SPOTIFY_SECRET"]
@@ -21,8 +21,7 @@ class Config(object):
     CLIENT_IMAGES = "./app/static/client/images/"
     CLIENT_AUDIO = "./app/static/client/audiofiles/"
     CLIENT_FOLDER = "./app/static/client/audiofiles/"
-    
-  
+
     #DATABASE
     application.config['MONGO_URI'] = MONGO_URI
     mongo = PyMongo(application)
