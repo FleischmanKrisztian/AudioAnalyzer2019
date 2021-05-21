@@ -31,34 +31,56 @@ class Audiofile:
         self.wavormp3 = True
         self.path = os.path.join(application.config['TESTING_PATH'], self.namewithextension)
 
-    def savetofolder(self):
+    def SaveToFolder(self):
         try:
             self.path = self.path.replace('\\','/')
             doc = self.fileaswhole
             os.makedirs(application.config['TESTING_PATH'],exist_ok=True)
             doc.save(self.path)
-            return ("Audiofile analyzed succesfully!") ,200
+            return ("Audiofile saved succesfully!") ,200
         except:
-            return ("There was an error while analyzing!") ,401
+            return ("There was an error while saving!") ,401
 
-    def generatedata(self):
+    def ConvertAudiofile(self):
+        try:                    
+            if not (".wav") in self.path:   
+                if not (".mp3") in self.path:
+                    self.wavormp3 = False                     
+                src = AudioSegment.from_file(self.path)
+                dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
+                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
+                src.export(dst, format="wav")
+                os.remove(self.path)
+                self.path = dst
+                return "Goodconversion" , 200
+            else:
+                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
+                dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
+                os.rename(self.path, dst)
+                self.path = dst
+                return "The file was already in wav format!" , 200                
+        except:
+            "The conversion from your file type to Wav was unsuccessful!", 401
+
+    def GenerateData(self):
         try:
-            t1 = threading.Thread(target=self.spectrogram_audiofile)
+            t1 = threading.Thread(target=self.SpectrogramAudiofile)
             t1.start()
-            t2 = threading.Thread(target=self.separate_audiofile,args=[2])
+            t2 = threading.Thread(target=self.SeparateAudiofile)
             t2.start()
-            t3 = threading.Thread(target=self.channel_audiofile)
+            t3 = threading.Thread(target=self.ChannelAudiofile)
             t3.start()
             t1.join()
-            t4 = threading.Thread(target=self.librosa_spectrogram)
+            t4 = threading.Thread(target=self.LibrosaSpectrogram)
             t4.start()
             t4.join()
-            t5 = threading.Thread(target=self.tempo_graph)
+            t5 = threading.Thread(target=self.Tempogram)
             t5.start()
             t5.join()    
-            t6 = threading.Thread(target=self.quality_spectrogram)
+            t6 = threading.Thread(target=self.QualitySpectrogram)
             t6.start()
-            t7 = threading.Thread(target=DatabaseActions.incrementFilesUploaded,args=[request.cookies.get('email')])
+            t7 = threading.Thread(target=DatabaseActions.incrementFilesUploaded,
+            args=[request.cookies.get('email')])
             t7.start()
             t7.join()
             t6.join()
@@ -84,30 +106,8 @@ class Audiofile:
             # for thread in threading.enumerate():
             #     print(thread.name)   
 
-    # convert all filetypes to WAV format
-    def convert_audiofile(self):
-        try:                    
-            if not (".wav") in self.path:   
-                if not (".mp3") in self.path:
-                    self.wavormp3 = False                     
-                src = AudioSegment.from_file(self.path)
-                dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
-                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
-                src.export(dst, format="wav")
-                os.remove(self.path)
-                self.path = dst
-                return "Goodconversion" , 200
-            else:
-                os.makedirs(application.config['UPLOAD_FOLDER'],exist_ok=True)
-                dst = application.config['UPLOAD_FOLDER'] + self.name + ".wav"
-                os.rename(self.path, dst)
-                self.path = dst
-                return "The file was already in wav format!" , 200                
-        except:
-            "The conversion from your file type to Wav was unsuccessful!", 401
-
     #NICE SPECTROGRAM
-    def spectrogram_audiofile(self):
+    def SpectrogramAudiofile(self):
         file = self.path
         wav_file = wave.open(file,'r')
         signal = wav_file.readframes(-1)
@@ -121,10 +121,7 @@ class Audiofile:
             raise RuntimeError("Unsupported sample width")
         numberofchannels = wav_file.getnchannels()
         self.numberofchannels = numberofchannels
-
         deinterleaved = [signal[idx::numberofchannels] for idx in range(numberofchannels)]
-
-        #Get time from indices
         fs = wav_file.getframerate()
         Time=np.linspace(0, round(len(signal)/numberofchannels/fs), round(len(signal)/numberofchannels))
         plt.figure(figsize=(10, 4))
@@ -142,10 +139,10 @@ class Audiofile:
         for channel in deinterleaved:
             plt.plot(Time,channel, linewidth=.035)
             os.makedirs(application.config['CLIENT_IMAGES'],exist_ok=True)
-            plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "nice.png", dpi=72)
+        plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "nice.png", dpi=72)
         
     # MEL SPECTROGRAM
-    def librosa_spectrogram(self):
+    def LibrosaSpectrogram(self):
         y, sr = librosa.load(self.path, sr=None)
         librosa.feature.melspectrogram(y=y, sr=sr)
         D = np.abs(librosa.stft(y))
@@ -157,7 +154,7 @@ class Audiofile:
         plt.rcParams['savefig.facecolor'] = 'black'
         plt.rcParams['axes.edgecolor'] = 'white'
         plt.rcParams['lines.color'] = 'white'
-        plt.rcParams['text.color'] = 'white'    
+        plt.rcParams['text.color'] = 'white'
         plt.rcParams['xtick.color'] = 'white'    
         plt.rcParams['ytick.color'] = 'white'
         plt.rcParams['axes.labelcolor'] = 'white'
@@ -169,28 +166,22 @@ class Audiofile:
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "mel.png", dpi=72)
 
     # instrumental/vocal Separator
-    def separate_audiofile(self,numberOfStems):
-        if numberOfStems == 5:
-            separator = Separator('spleeter:5stems')
-        elif numberOfStems == 2:
-            separator = Separator('spleeter:2stems')
+    def SeparateAudiofile(self):
+        separator = Separator('spleeter:2stems')
         os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
         separator.separate_to_file(self.path, application.config['CLIENT_AUDIOFILES'])
     
     # channel separator
-    def channel_audiofile(self):
+    def ChannelAudiofile(self):
         fs, data = wavfile.read(self.path)
         os.makedirs(application.config['CLIENT_AUDIOFILES'],exist_ok=True)
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "L.Wav", fs, data[:, 0])
         wavfile.write(application.config['CLIENT_AUDIOFILES'] + self.name + "R.Wav", fs, data[:, 1])
 
     # Tempogram
-    def tempo_graph(self):
-            
+    def Tempogram(self):    
         y, sr = librosa.load(self.path)
-        tempo = librosa.beat.beat_track(y=y, sr=sr)
         different = False
-
         onset_env = librosa.onset.onset_strength(y, sr=sr)
         tempo = librosa.beat.tempo(onset_envelope=onset_env, sr=sr)
         tempo2 = librosa.beat.beat_track(y=y, sr=sr)
@@ -202,11 +193,9 @@ class Audiofile:
         except:
             return ("An error has occured"), 401
         tempo = np.asscalar(tempo)
-        # Compute 2-second windowed autocorrelation
         hop_length = 512
         ac = librosa.autocorrelate(onset_env, 2 * sr // hop_length)
         freqs = librosa.tempo_frequencies(len(ac), sr=sr, hop_length=hop_length)
-        # Plot on a BPM axis.  We skip the first (0-lag) bin.
         plt.figure(figsize=(10,4))
         plt.rcParams['axes.facecolor'] = 'black'
         plt.rcParams['savefig.facecolor'] = 'black'
@@ -230,7 +219,7 @@ class Audiofile:
         plt.savefig(application.config['CLIENT_IMAGES'] + self.name + "tempo.png", dpi=72)
 
     #Quality Spectrogram
-    def quality_spectrogram(self):
+    def QualitySpectrogram(self):
         wavname=self.path
         wav = wave.open(wavname, 'r')  
         frames = wav.readframes(-1)

@@ -1,9 +1,10 @@
+from app import application
 import pymongo
 from datetime import date
 from flask import request, session
 from passlib.hash import pbkdf2_sha256
 import json
-from app import application
+
 
 client = pymongo.MongoClient(application.config["MONGO_URI"])
 db = client.Users
@@ -25,7 +26,7 @@ def add_to_db(user):
         return start_session(jsonstring), 200
     return ("There was an error while adding to Database!"), 500
 
-def loginFunction():
+def login():
     email = request.form.get('email')
     user = db.users.find_one({ "email": email })
     if user and pbkdf2_sha256.verify(request.form.get('password'), user['password']):

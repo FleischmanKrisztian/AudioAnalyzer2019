@@ -1,7 +1,7 @@
+from app import application
 import sys
 import json
 import spotipy
-from app import application
 import time
 from spotipy.oauth2 import SpotifyClientCredentials
 

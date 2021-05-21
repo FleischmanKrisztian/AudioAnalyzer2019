@@ -35,9 +35,7 @@ def index():
 
 @application.route("/sign-up", methods=["GET", "POST"])
 def sign_up():
-
     if request.method == "POST":
-
         user = User()
         code = DatabaseActions.add_to_db(user)
         if code[1] == 200:
@@ -46,8 +44,8 @@ def sign_up():
             return render_template("public/sign_up.html")
 
     return render_template("public/sign_up.html")
-# import shutil
 
+# import shutil
 @application.route("/about")
 def about():
     # shutil.rmtree(path=application.config["CLIENT_FOLDER"])
@@ -82,7 +80,7 @@ def signout():
 @application.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
-        code = DatabaseActions.loginFunction()
+        code = DatabaseActions.login()
         if code[1] == 200:
             return render_template("public/index.html")
         else:
@@ -108,8 +106,8 @@ def upload():
             else:
                 DatabaseActions.incrementFilesUploaded(request.cookies.get('email'))
                 audiofile = Audiofile.Audiofile()
-                audiofile.savetofolder()
-                audiofile.convert_audiofile()
+                audiofile.SaveToFolder()
+                audiofile.ConvertAudiofile()
                 id = spotifyapi.Get_id_of_song(audiofile.name)
                 if Filefound(id):
                     tempo = (spotifyapi.tempo_of_id(id[0]))
@@ -122,7 +120,7 @@ def upload():
                     key = "No song was found on spotify"
                     existsonspotify = False
                 
-                audiofile.generatedata()
+                audiofile.GenerateData()
 
                     
         return render_template("public/results.html",nameofsong=audiofile.name, numberofchannels = audiofile.numberofchannels, keyofsong=key, tempoofsong=tempo, idofsong = id[0], existsonspotify = existsonspotify)  
